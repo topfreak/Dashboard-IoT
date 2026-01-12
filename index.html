@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CorroVision Master Hub v15.0</title>
+    <title>SPRCP Master Hub v15.0</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font & Icons -->
@@ -58,15 +58,15 @@
     <!-- LOADER -->
     <div id="loader" class="fixed inset-0 z-[99] bg-slate-950 flex flex-col items-center justify-center text-white transition-opacity duration-500">
         <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center">CorroVision v15<br><span class="text-[11px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-widest">Research Data Integrated</span></h2>
+        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center uppercase tracking-tighter">SPRCP<br><span class="text-[9px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-[0.3em]">Smart Patch Repair Cathodic Protection</span></h2>
     </div>
 
     <div class="min-h-screen flex flex-col lg:flex-row">
         <!-- SIDEBAR -->
         <aside class="w-full lg:w-80 bg-slate-900 text-white flex flex-col shadow-2xl z-20 border-r border-slate-800 h-screen sticky top-0 overflow-hidden">
             <div class="p-8 border-b border-slate-800">
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">SPRCP<span class="text-emerald-400">.v15</span></h1>
-                <p class="text-[10px] text-slate-500 font-bold uppercase mt-1 tracking-widest leading-none">Research Control Center</p>
+                <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">SPRCP<span class="text-emerald-400">.v15</span></h1>
+                <p class="text-[8px] text-slate-500 font-bold uppercase mt-1 tracking-widest leading-none">Smart Patch Repair<br>Cathodic Protection</p>
             </div>
 
             <nav class="flex-1 p-6 space-y-3 overflow-y-auto custom-scrollbar">
@@ -102,7 +102,7 @@
                 <div>
                     <h2 id="page-title" class="text-xl md:text-2xl font-black text-slate-800 uppercase italic tracking-tight">Data Monitoring</h2>
                     <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1 italic">
-                        Sinkronisasi: <span id="sync-time">Menghubungkan...</span>
+                        SPRCP Sinkronisasi: <span id="sync-time">Menghubungkan...</span>
                     </p>
                 </div>
                 <div class="flex gap-4">
@@ -189,8 +189,8 @@
 
                     <div class="bg-white p-6 md:p-10 rounded-[3rem] border border-slate-200 shadow-xl">
                         <div class="mb-8 text-center md:text-left">
-                            <h3 class="text-xl font-black italic text-slate-800 uppercase">Tren Potensial Akhir</h3>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">Data Hasil Perhitungan Kompensasi Suhu</p>
+                            <h3 class="text-xl font-black italic text-slate-800 uppercase tracking-tighter">Tren Potensial Korosi SPRCP</h3>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">Data Potensial Akhir (Hasil Kompensasi)</p>
                         </div>
                         <div id="chart-trend" class="w-full h-[550px]"></div>
                     </div>
@@ -215,15 +215,15 @@
                             <input type="number" id="input-surface-area" step="0.0001" value="0.05" onchange="window.updateCurrentChart()" class="w-40 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white outline-none focus:border-emerald-500 transition-all font-mono">
                         </div>
                         <div class="ml-auto text-right">
-                             <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest leading-none">Standar Perhitungan</p>
-                             <p class="text-xs text-slate-400 font-bold italic">J = I / A (mA/m2)</p>
+                             <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest leading-none">Standar Perhitungan J</p>
+                             <p class="text-xs text-slate-400 font-bold italic">Rapat Arus = Arus / Luas (mA/m2)</p>
                         </div>
                     </div>
 
                     <div class="bg-slate-950 p-6 md:p-10 rounded-[3.5rem] border-b-8 border-emerald-500 shadow-2xl">
                         <div class="mb-10 flex justify-between items-start">
                             <div>
-                                <h3 class="text-xl font-black italic text-white uppercase">Analisis Rapat Arus (Current Density)</h3>
+                                <h3 class="text-xl font-black italic text-white uppercase tracking-tighter">Analisis Rapat Arus SPRCP</h3>
                                 <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Satuan: Milliampere per Meter Persegi (mA/m2)</p>
                             </div>
                         </div>
@@ -234,17 +234,17 @@
                 <!-- TAB: SETUP RISET -->
                 <div id="tab-setup" class="hidden grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-xl flex flex-col">
-                        <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3 text-slate-800">
-                            <i class="far fa-calendar-alt text-emerald-500"></i> Tanggal Mulai Riset
+                        <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3 text-slate-800 leading-tight">
+                            <i class="far fa-calendar-alt text-emerald-500"></i> Tanggal Mulai Riset SPRCP
                         </h4>
-                        <p class="text-xs text-slate-400 mb-8 font-bold italic leading-relaxed">Penghitungan otomatis Hari Ke-n dimulai dari tanggal ini.</p>
+                        <p class="text-xs text-slate-400 mb-8 font-bold italic leading-relaxed">Sinkronisasi acuan waktu riset untuk label Hari riset global.</p>
                         <input type="date" id="setup-start-date" class="w-full px-8 py-4 rounded-2xl border-2 border-slate-100 bg-slate-50 font-black outline-none focus:border-emerald-500 shadow-inner mb-6 transition-all">
-                        <button onclick="saveStartDate()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg hover:scale-[1.02] active:scale-95 transition-all mt-auto">Simpan Waktu</button>
+                        <button onclick="saveStartDate()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg hover:scale-[1.02] active:scale-95 transition-all mt-auto">Simpan Konfigurasi</button>
                     </div>
 
                     <div class="bg-slate-900 p-10 rounded-[3rem] text-white shadow-2xl">
                         <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3 text-emerald-400">
-                            <i class="fas fa-calculator"></i> Pengaturan Kalibrasi
+                            <i class="fas fa-calculator"></i> Kalibrasi SPRCP
                         </h4>
                         <div class="space-y-4 mb-8">
                             <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm">
@@ -260,7 +260,7 @@
                                 <input type="number" id="poly-c" step="0.1" class="bg-transparent text-right outline-none font-mono text-white w-1/2">
                             </div>
                         </div>
-                        <button onclick="saveCalibration()" class="w-full bg-emerald-500 text-slate-900 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all">Simpan Kalibrasi</button>
+                        <button onclick="saveCalibration()" class="w-full bg-emerald-500 text-slate-900 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all">Kirim Ke Perangkat</button>
                     </div>
                 </div>
 
@@ -274,7 +274,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-        // --- Konfigurasi Firebase Resmi ---
+        // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyA_tdRuWtUshubvm-lx2Et8OfB771wI9iU",
             authDomain: "korosi-iot.firebaseapp.com",
@@ -350,7 +350,7 @@
                     const currentStatus = data.status === 'PROTECTED' ? 'PROTECTED' : 'OFF';
                     if(txt) txt.innerText = currentStatus;
                     if(dot) dot.className = `w-3 h-3 rounded-full transition-all duration-700 ${currentStatus === 'PROTECTED' ? 'bg-emerald-500 shadow-[0_0_10px_#10b981]' : 'bg-rose-500'}`;
-                    if(sync) sync.innerText = `Terakhir: ${data.last_update?.split(' ')[1] || '-'}`;
+                    if(sync) sync.innerText = `${data.last_update?.split(' ')[1] || '-'}`;
                 }
             });
 
@@ -377,16 +377,13 @@
             });
         }
 
-        // --- RUMUS KONVERSI AKHIR ---
         const calcFinalPotential = (sse, suhu) => {
             if (!sse || sse === '-' || isNaN(sse)) return null;
             const temp = suhu || 25;
-            // CSE = SSE - 74,5 - 1,66 * (Suhu - 25)
             const result = parseFloat(sse) - 74.5 - (1.66 * (temp - 25));
             return parseFloat(result.toFixed(1));
         };
 
-        // --- UI ACTIONS ---
         window.switchTab = (tabId) => {
             currentTab = tabId;
             ['logs', 'trend', 'current', 'setup'].forEach(t => {
@@ -414,7 +411,6 @@
         function updateTrendDataTypeOptions() {
             const method = document.getElementById('trend-filter-method').value;
             const typeSelect = document.getElementById('trend-filter-datatype');
-            
             typeSelect.innerHTML = "";
             if(method === 'SACP') {
                 typeSelect.innerHTML = `
@@ -427,7 +423,6 @@
             }
         }
 
-        // --- RENDER LOG TABLE ---
         window.renderLogTable = () => {
             const filterBU = document.getElementById('filter-bu').value;
             const filterType = document.getElementById('filter-type').value;
@@ -439,7 +434,7 @@
                         <th class="px-3 py-4 sticky-col">Waktu</th>
                         <th class="px-3 py-4 sticky-col" style="left: 65px">Sampel</th>
                         <th class="px-3 py-4">Suhu</th>
-                        <th class="px-3 py-4">Zona</th>
+                        <th class="px-3 py-4 text-center">Zona</th>
                         <th class="px-3 py-4 text-blue-400 border-l border-slate-200">ON (1)</th>
                         <th class="px-3 py-4 text-blue-400">ON (2)</th>
                         <th class="px-3 py-4 text-emerald-400 border-l border-slate-200">OFF (1)</th>
@@ -448,13 +443,13 @@
                         <th class="px-3 py-4 text-amber-400">REST (2)</th>
                         <th class="px-3 py-4 text-blue-600 bg-blue-50 border-l-2 border-blue-200 text-center">ON (Rata)</th>
                         <th class="px-3 py-4 text-blue-600 bg-blue-50 text-center">ON (Zona)</th>
-                        <th class="px-3 py-4 text-blue-800 bg-blue-100 text-center">ON (Akhir)</th>
+                        <th class="px-3 py-4 text-blue-800 bg-blue-100 text-center text-center">ON (Hasil)</th>
                         <th class="px-3 py-4 text-emerald-600 bg-emerald-50 border-l-2 border-emerald-200 text-center">OFF (Rata)</th>
-                        <th class="px-3 py-4 text-emerald-600 bg-emerald-50 text-center">OFF (Zona)</th>
-                        <th class="px-3 py-4 text-emerald-800 bg-emerald-100 text-center">OFF (Akhir)</th>
+                        <th class="px-3 py-4 text-emerald-600 bg-emerald-50 text-center text-center">OFF (Zona)</th>
+                        <th class="px-3 py-4 text-emerald-800 bg-emerald-100 text-center text-center text-center text-center">OFF (Hasil)</th>
                         <th class="px-3 py-4 text-amber-600 bg-amber-50 border-l-2 border-amber-200 text-center">REST (Rata)</th>
-                        <th class="px-3 py-4 text-amber-600 bg-amber-50 text-center">REST (Zona)</th>
-                        <th class="px-3 py-4 text-amber-800 bg-amber-100 text-center font-black">REST (Akhir)</th>
+                        <th class="px-3 py-4 text-amber-600 bg-amber-50 text-center text-center text-center">REST (Zona)</th>
+                        <th class="px-3 py-4 text-amber-800 bg-amber-100 text-center font-black">REST (Hasil)</th>
                     </tr>
                 `;
             } else {
@@ -463,10 +458,10 @@
                         <th class="px-5 py-4 sticky-col">Waktu</th>
                         <th class="px-5 py-4 sticky-col" style="left: 80px">Sampel</th>
                         <th class="px-5 py-4">Suhu</th>
-                        <th class="px-5 py-4">Zona</th>
+                        <th class="px-5 py-4 text-center">Zona</th>
                         <th class="px-5 py-4 border-l border-slate-200 text-rose-400">ALAMI (1)</th>
                         <th class="px-5 py-4 text-rose-400">ALAMI (2)</th>
-                        <th class="px-5 py-4 bg-rose-50 text-rose-600 border-l-2 border-rose-200 text-center">Rata-rata</th>
+                        <th class="px-5 py-4 bg-rose-50 text-rose-600 border-l-2 border-rose-200 text-center text-center">Rata-rata</th>
                         <th class="px-5 py-4 bg-rose-50 text-rose-600 text-center">Zona</th>
                         <th class="px-5 py-4 bg-rose-100 text-rose-900 text-center font-black">Hasil Akhir</th>
                     </tr>
@@ -521,12 +516,11 @@
                     const sOnSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'onAvg');
                     const sOffSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'offAvg');
                     const sRestSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'restAvg');
-
                     tr.innerHTML = `
-                        <td class="px-3 py-3 sticky-col text-slate-400 font-black">Hari ${d.hari}</td>
+                        <td class="px-3 py-3 sticky-col text-slate-400 font-black text-center">Hari ${d.hari}</td>
                         <td class="px-3 py-3 sticky-col text-slate-900 font-extrabold uppercase" style="left: 65px">${d.bu}<br><span class="text-[8px] text-slate-400 font-mono">${d.tp}</span></td>
-                        <td class="px-3 py-3 text-rose-500">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
-                        <td class="px-3 py-3 text-slate-400 text-[8px] uppercase">${d.typePoint}</td>
+                        <td class="px-3 py-3 text-rose-500 text-center">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
+                        <td class="px-3 py-3 text-slate-400 text-[8px] uppercase text-center">${d.typePoint}</td>
                         <td class="px-3 py-3 text-center border-l font-mono">${d.on1 !== '-' ? Math.round(d.on1) : '-'}</td>
                         <td class="px-3 py-3 text-center font-mono">${d.on2 !== '-' ? Math.round(d.on2) : '-'}</td>
                         <td class="px-3 py-3 text-center border-l font-mono">${d.off1 !== '-' ? Math.round(d.off1) : '-'}</td>
@@ -534,40 +528,38 @@
                         <td class="px-3 py-3 text-center border-l font-mono">${d.rest1 !== '-' ? Math.round(d.rest1) : '-'}</td>
                         <td class="px-3 py-3 text-center font-mono">${d.rest2 !== '-' ? Math.round(d.rest2) : '-'}</td>
                         <td class="px-3 py-3 text-center bg-blue-50 border-l-2 text-blue-600 font-mono">${d.onAvg !== '-' ? Math.round(d.onAvg) : '-'}</td>
-                        <td class="px-3 py-3 text-center bg-blue-50 text-blue-600 font-mono font-black">${sOnSSE}</td>
+                        <td class="px-3 py-3 text-center bg-blue-50 text-blue-600 font-mono">${sOnSSE}</td>
                         <td class="px-3 py-3 text-center bg-blue-100 text-blue-900 font-mono font-black">${calcFinalPotential(sOnSSE, d.suhu) || '-'}</td>
                         <td class="px-3 py-3 text-center bg-emerald-50 border-l-2 text-emerald-600 font-mono">${d.offAvg !== '-' ? Math.round(d.offAvg) : '-'}</td>
-                        <td class="px-3 py-3 text-center bg-emerald-50 text-emerald-600 font-mono font-black">${sOffSSE}</td>
+                        <td class="px-3 py-3 text-center bg-emerald-50 text-emerald-600 font-mono">${sOffSSE}</td>
                         <td class="px-3 py-3 text-center bg-emerald-100 text-emerald-900 font-mono font-black">${calcFinalPotential(sOffSSE, d.suhu) || '-'}</td>
                         <td class="px-3 py-3 text-center bg-amber-50 border-l-2 text-amber-600 font-mono">${d.restAvg !== '-' ? Math.round(d.restAvg) : '-'}</td>
-                        <td class="px-3 py-3 text-center bg-amber-50 text-amber-600 font-mono font-black">${sRestSSE}</td>
-                        <td class="px-3 py-3 text-center bg-amber-100 text-amber-900 font-mono font-black">${calcFinalPotential(sRestSSE, d.suhu) || '-'}</td>
+                        <td class="px-3 py-3 text-center bg-amber-50 text-amber-600 font-mono">${sRestSSE}</td>
+                        <td class="px-3 py-3 text-center bg-amber-100 text-amber-900 font-mono font-black text-center">${calcFinalPotential(sRestSSE, d.suhu) || '-'}</td>
                     `;
                 } else {
                     if (d.hcpAvg === '-') return; 
                     const sHcpSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'hcpAvg');
                     tr.innerHTML = `
-                        <td class="px-5 py-4 sticky-col text-slate-400 font-black">Hari ${d.hari}</td>
+                        <td class="px-5 py-4 sticky-col text-slate-400 font-black text-center">Hari ${d.hari}</td>
                         <td class="px-5 py-4 sticky-col text-slate-900 font-extrabold uppercase" style="left: 80px">${d.bu}<br><span class="text-[9px] text-slate-400 font-mono">${d.tp}</span></td>
-                        <td class="px-5 py-4 text-rose-500">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
-                        <td class="px-5 py-4 text-slate-400 text-[9px] font-bold italic uppercase">${d.typePoint}</td>
-                        <td class="px-5 py-4 text-center border-l font-mono">${d.hcp1 !== '-' ? Math.round(d.hcp1) : '-'}</td>
-                        <td class="px-5 py-4 text-center font-mono">${d.hcp2 !== '-' ? Math.round(d.hcp2) : '-'}</td>
-                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-600 border-l-2 font-mono font-black text-center">${d.hcpAvg !== '-' ? Math.round(d.hcpAvg) : '-'}</td>
-                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-700 font-mono font-black text-center">${sHcpSSE}</td>
-                        <td class="px-5 py-4 text-center bg-rose-100 text-rose-950 font-mono font-black text-xs text-center">${calcFinalPotential(sHcpSSE, d.suhu) || '-'}</td>
+                        <td class="px-5 py-4 text-rose-500 text-center">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
+                        <td class="px-5 py-4 text-slate-400 text-[9px] font-bold italic uppercase text-center">${d.typePoint}</td>
+                        <td class="px-5 py-4 text-center border-l font-mono text-center">${d.hcp1 !== '-' ? Math.round(d.hcp1) : '-'}</td>
+                        <td class="px-5 py-4 text-center font-mono text-center text-center">${d.hcp2 !== '-' ? Math.round(d.hcp2) : '-'}</td>
+                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-600 border-l-2 font-black text-center">${d.hcpAvg !== '-' ? Math.round(d.hcpAvg) : '-'}</td>
+                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-700 text-center">${sHcpSSE}</td>
+                        <td class="px-5 py-4 text-center bg-rose-100 text-rose-950 font-black text-xs text-center">${calcFinalPotential(sHcpSSE, d.suhu) || '-'}</td>
                     `;
                 }
                 tableBody.appendChild(tr);
             });
         };
 
-        // --- UPDATE TREND CHART ---
         window.updateTrendChart = () => {
             const bu = document.getElementById('trend-filter-bu').value;
             const method = document.getElementById('trend-filter-method').value;
             const dataType = document.getElementById('trend-filter-datatype').value;
-
             const pairs = new Map();
             rawLogs.forEach(l => {
                 const key = `${l.hari_ke}-${l.bu}-${l.tp}`;
@@ -577,10 +569,8 @@
                 if (l.fase === 'PH2') entry.rest_avg = l.v_off_avg || l.off_avg;
                 if (l.fase === 'HCP') entry.hcp_avg = l.hcp_avg || l.off_avg;
             });
-
             const processedData = Array.from(pairs.values()).filter(d => bu === 'ALL' || d.bu === bu);
             const days = [...new Set(processedData.map(d => d.hari))].sort((a,b) => a - b);
-            
             const getFinalAvgByZona = (hari, pointType) => {
                 const filtered = processedData.filter(p => p.hari === hari && p.typePoint === pointType);
                 const rawValues = filtered.map(f => f[dataType]).filter(v => v !== undefined && v !== '-');
@@ -589,7 +579,6 @@
                 const avgSuhu = filtered.reduce((a, b) => a + (b.suhu || 25), 0) / filtered.length;
                 return calcFinalPotential(avgRaw, avgSuhu);
             };
-
             const options = {
                 series: [
                     { name: 'Zona Patch Repair', data: days.map(d => getFinalAvgByZona(d, 'Patch Repair')) },
@@ -600,47 +589,34 @@
                 stroke: { width: 5, curve: 'smooth' },
                 colors: ['#10b981', '#f59e0b', '#3b82f6'],
                 xaxis: { categories: days.map(d => `H-${d}`), labels: { style: { colors: '#94a3b8', fontWeight: 700 } } },
-                yaxis: { 
-                    min: -1200, max: 0, tickAmount: 12,
-                    labels: { style: { colors: '#64748b' }, formatter: (v) => v ? v.toFixed(0) + " mV" : v },
-                    title: { text: "Potensial Korosi (mV)", style: { color: '#64748b', fontWeight: 800 } }
-                },
+                yaxis: { min: -1200, max: 0, tickAmount: 12, labels: { style: { colors: '#64748b' }, formatter: (v) => v ? v.toFixed(0) + " mV" : v }, title: { text: "Potensial Korosi (mV)", style: { color: '#64748b', fontWeight: 800 } } },
                 markers: { size: 6, strokeWidth: 3 },
                 grid: { borderColor: '#f1f5f9' },
                 legend: { position: 'top', fontWeight: 700 },
                 tooltip: { shared: true, theme: 'light' }
             };
-
             if(trendChart) trendChart.destroy();
             const el = document.querySelector("#chart-trend");
             if(el) { trendChart = new ApexCharts(el, options); trendChart.render(); }
         };
 
-        // --- UPDATE CURRENT CHART ---
         window.updateCurrentChart = () => {
             const bu = document.getElementById('filter-bu-current').value;
             const area = parseFloat(document.getElementById('input-surface-area').value) || 1.0;
             let buData = currentLogs;
-            
-            if (bu !== 'ALL') {
-                buData = currentLogs.filter(l => l.bu === bu);
-            }
-
-            // Group by Time for Average if ALL is selected
+            if (bu !== 'ALL') { buData = currentLogs.filter(l => l.bu === bu); }
             const timeMap = new Map();
             buData.forEach(d => {
                 const timeStr = d.waktu_lokal?.split(' ')[1].substring(0, 5);
                 if (!timeMap.has(timeStr)) timeMap.set(timeStr, []);
                 timeMap.get(timeStr).push(parseFloat(d.i_ma || 0));
             });
-
             const sortedTimes = Array.from(timeMap.keys()).sort();
             const cdData = sortedTimes.map(time => {
                 const values = timeMap.get(time);
                 const avgMA = values.reduce((a,b) => a+b, 0) / values.length;
                 return parseFloat((avgMA / area).toFixed(3));
             });
-
             const opt = {
                 series: [{ name: 'Rapat Arus (mA/m2)', data: cdData }],
                 chart: { type: 'area', height: 400, toolbar: { show: true }, background: 'transparent' },
@@ -653,7 +629,6 @@
                 grid: { borderColor: '#1e293b', strokeDashArray: 4 },
                 tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA/m2" } }
             };
-
             if(currentChart) currentChart.destroy();
             const el = document.querySelector("#chart-current");
             if(el) { currentChart = new ApexCharts(el, opt); currentChart.render(); }
@@ -663,7 +638,7 @@
             const val = document.getElementById('setup-start-date').value;
             if(!val) return;
             const ts = Math.floor(new Date(val).getTime() / 1000);
-            set(ref(db, `${basePath}/research_config`), { start_date: val, start_timestamp: ts }).then(() => alert("Waktu Riset Disimpan!"));
+            set(ref(db, `${basePath}/research_config`), { start_date: val, start_timestamp: ts }).then(() => alert("Konfigurasi SPRCP Disimpan!"));
         };
 
         window.saveCalibration = () => {
@@ -672,17 +647,16 @@
                 poly_b: parseFloat(document.getElementById('poly-b').value) || 1,
                 poly_c: parseFloat(document.getElementById('poly-c').value) || 0
             };
-            set(ref(db, `${basePath}/kalibrasi`), data).then(() => alert("Kalibrasi Berhasil Disinkronkan!"));
+            set(ref(db, `${basePath}/kalibrasi`), data).then(() => alert("Kalibrasi SPRCP Berhasil Sinkron!"));
         };
 
         window.exportToExcel = () => {
             const filterType = document.getElementById('filter-type').value;
             const table = document.querySelector("table");
             const wb = XLSX.utils.table_to_book(table);
-            XLSX.writeFile(wb, `Laporan_Riset_${filterType}_${new Date().toISOString().split('T')[0]}.xlsx`);
+            XLSX.writeFile(wb, `SPRCP_Research_Report_${filterType}_${new Date().toISOString().split('T')[0]}.xlsx`);
         };
 
-        // Listeners
         document.getElementById('filter-bu').addEventListener('change', window.renderLogTable);
         document.getElementById('filter-type').addEventListener('change', window.renderLogTable);
         document.getElementById('filter-bu-current').addEventListener('change', window.updateCurrentChart);
