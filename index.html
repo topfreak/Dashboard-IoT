@@ -3,176 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Patch Repair Cathodic Protection v13.1</title>
+    <title>CorroVision Master Hub v15.0</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Pustaka Grafik & Excel -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Charts & Excel -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f8fafc; 
+            background-color: #f1f5f9; 
+        }
+        .tab-active {
+            background-color: #10b981;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #f8fafc;
+            white-space: nowrap;
         }
 
-        .bg-slate-dark { background-color: #0f172a; }
-        .emerald-gradient { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            background: white;
+            z-index: 30;
+            border-right: 2px solid #f1f5f9;
+        }
         
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
-        
-        .row-animate { animation: fadeIn 0.4s ease forwards; opacity: 0; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        tr:hover .sticky-col {
+            background: #f0fdf4;
+        }
 
-        .badge-patch { background-color: #ecfdf5; color: #059669; border: 1px solid #10b98120; }
-        .badge-bounding { background-color: #fffbeb; color: #d97706; border: 1px solid #f59e0b20; }
-        .badge-existing { background-color: #f0f9ff; color: #0284c7; border: 1px solid #0ea5e920; }
-
-        .apexcharts-tooltip {
-            border-radius: 15px !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
-            border: 1px solid #e2e8f0 !important;
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        .table-container {
+            max-height: 70vh;
+            overflow: auto;
         }
     </style>
 </head>
-<body class="text-slate-900">
+<body class="text-slate-900 text-sm md:text-base overflow-x-hidden">
 
-    <!-- LOADING OVERLAY -->
+    <!-- LOADER -->
     <div id="loader" class="fixed inset-0 z-[99] bg-slate-950 flex flex-col items-center justify-center text-white transition-opacity duration-500">
         <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center">Smart Patch Repair Cathodic Protection<br><span class="text-[11px] text-slate-500 font-medium tracking-normal not-italic">Menyinkronkan Visualisasi...</span></h2>
+        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center">CorroVision v15<br><span class="text-[11px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-widest">Research Data Integrated</span></h2>
     </div>
 
     <div class="min-h-screen flex flex-col lg:flex-row">
         <!-- SIDEBAR -->
-        <aside class="w-full lg:w-80 bg-slate-dark text-white flex flex-col shadow-2xl border-r border-slate-800">
-            <div class="p-10 border-b border-slate-800 flex items-center gap-3">
-                <div class="bg-emerald-500 p-2.5 rounded-2xl text-slate-900 shadow-lg">
-                    <i class="fas fa-chart-line text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold italic tracking-tight leading-none">SPR<span class="text-emerald-400">CP</span></h1>
-                    <p class="text-[10px] text-slate-500 font-semibold tracking-wide mt-1">Smart Patch Repair Cathodic Protection v13.1</p>
-                </div>
+        <aside class="w-full lg:w-80 bg-slate-900 text-white flex flex-col shadow-2xl z-20 border-r border-slate-800 h-screen sticky top-0 overflow-hidden">
+            <div class="p-8 border-b border-slate-800">
+                <h1 class="text-2xl font-black italic tracking-tighter uppercase">SPRCP<span class="text-emerald-400">.v15</span></h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mt-1 tracking-widest leading-none">Research Control Center</p>
             </div>
 
-            <div class="p-6 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
-                <!-- PANEL FILTER GRAFIK -->
-                <div class="bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 shadow-inner">
-                    <h3 class="text-[11px] font-bold text-emerald-400 mb-4 italic flex items-center gap-2 uppercase tracking-widest leading-none">
-                        <i class="fas fa-filter text-[9px]"></i> Filter Visualisasi
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-semibold text-slate-500 ml-2 italic">Benda Uji (BU)</label>
-                            <select id="filter-bu" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-bold outline-none focus:border-emerald-500 cursor-pointer italic transition-all">
-                                <option value="all">Semua Benda Uji</option>
-                                <option value="M1">Benda Uji M1</option>
-                                <option value="M4">Benda Uji M4</option>
-                                <option value="M10">Benda Uji M10</option>
-                                <option value="M14">Benda Uji M14</option>
-                                <option value="MK22">Benda Uji MK22</option>
-                                <option value="MK21">Benda Uji MK21</option>
-                                <option value="MK18">Benda Uji MK18</option>
-                                <option value="MK17">Benda Uji MK17</option>
-                            </select>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-semibold text-slate-500 ml-2 italic">Tipe Pengujian</label>
-                            <select id="filter-type" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-bold outline-none focus:border-emerald-500 cursor-pointer italic text-emerald-400">
-                                <option value="SACP">SACP (PH1 + PH2)</option>
-                                <option value="HCP">HCP (Potensial Alami)</option>
-                            </select>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-semibold text-slate-500 ml-2 italic">Tipe Data Korosi</label>
-                            <select id="filter-data-type" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-bold outline-none focus:border-emerald-500 cursor-pointer italic">
-                                <!-- Opsi dinamis diisi JS -->
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KALIBRASI -->
-                <div class="bg-slate-800/20 rounded-3xl p-6 border border-slate-700/30">
-                    <h3 class="text-[11px] font-bold text-slate-400 mb-4 italic flex items-center gap-2">
-                        <i class="fas fa-sliders text-[9px]"></i> Konfigurasi Remote
-                    </h3>
-                    <div class="space-y-3">
-                        <input type="number" id="input-a" placeholder="Koefisien A" step="0.0000001" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-2 font-mono text-[10px] text-emerald-400 outline-none">
-                        <input type="number" id="input-b" placeholder="Koefisien B" step="0.0001" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-2 font-mono text-[10px] text-emerald-400 outline-none">
-                        <input type="number" id="input-c" placeholder="Konstanta C" step="0.1" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-2 font-mono text-[10px] text-emerald-400 outline-none">
-                        <button id="btn-save-cal" class="w-full bg-slate-700 text-white rounded-xl py-2.5 text-[10px] font-bold hover:bg-emerald-600 transition-all italic">
-                            Update Parameter
-                        </button>
-                    </div>
-                </div>
-
-                <button id="btn-export" class="w-full bg-slate-100 text-slate-900 rounded-2xl py-4 text-[11px] font-bold flex items-center justify-center gap-2 hover:bg-white transition-all italic shadow-xl border-b-4 border-slate-300">
-                    <i class="fas fa-file-excel text-emerald-600 text-lg"></i> Ekspor Laporan Excel
+            <nav class="flex-1 p-6 space-y-3 overflow-y-auto custom-scrollbar">
+                <button onclick="switchTab('logs')" id="btn-logs" class="w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all hover:bg-slate-800 text-slate-400">
+                    <i class="fas fa-database"></i> Log Data
                 </button>
-            </div>
+                <button onclick="switchTab('trend')" id="btn-trend" class="w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all hover:bg-slate-800 text-slate-400">
+                    <i class="fas fa-chart-line"></i> Tren Korosi
+                </button>
+                <button onclick="switchTab('current')" id="btn-current" class="w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all hover:bg-slate-800 text-slate-400">
+                    <i class="fas fa-bolt"></i> Tren Arus (CD)
+                </button>
+                <button onclick="switchTab('setup')" id="btn-setup" class="w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all hover:bg-slate-800 text-slate-400">
+                    <i class="fas fa-cog"></i> Setup Riset
+                </button>
+            </nav>
 
-            <div class="p-8 bg-black/30 border-t border-slate-800">
-                <div class="flex items-center gap-3">
-                    <div id="status-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></div>
-                    <span id="status-text" class="text-[10px] font-bold text-slate-400 italic leading-none">Terputus</span>
+            <div class="p-8 border-t border-slate-800 bg-black/20">
+                <div class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-2xl border border-white/5">
+                    <div id="status-dot" class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></div>
+                    <div>
+                        <p class="text-[9px] font-black uppercase text-slate-500 leading-none mb-1">Status Sistem</p>
+                        <p id="status-text" class="text-xs font-bold text-white uppercase tracking-tighter">OFF</p>
+                    </div>
                 </div>
             </div>
         </aside>
 
         <!-- MAIN AREA -->
         <main class="flex-1 flex flex-col h-screen overflow-hidden">
-            <!-- HEADER -->
-            <header class="bg-white border-b-4 border-emerald-500 px-8 py-6 lg:px-12 flex flex-col md:flex-row justify-between items-center z-10 shadow-sm gap-6">
+            <!-- TOPBAR -->
+            <header class="bg-white border-b-4 border-emerald-500 px-8 md:px-12 py-6 flex flex-col md:flex-row justify-between items-center z-10 shadow-sm gap-4">
                 <div>
-                    <h2 id="view-title" class="text-2xl font-extrabold text-slate-900 tracking-tight italic leading-none">Analisis Tren Korosi</h2>
-                    <p class="text-xs text-slate-400 font-semibold mt-2 italic text-emerald-600">Grafik Multi-Axis: Potensial (Inversi) & Arus</p>
+                    <h2 id="page-title" class="text-xl md:text-2xl font-black text-slate-800 uppercase italic tracking-tight">Data Monitoring</h2>
+                    <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1 italic">
+                        Sinkronisasi: <span id="sync-time">Menghubungkan...</span>
+                    </p>
                 </div>
-                
-                <div class="flex items-center gap-6">
-                    <div id="anode-badge" class="flex items-center gap-3 bg-slate-100 px-6 py-3 rounded-3xl border-2 border-slate-200 transition-all shadow-inner">
-                        <i id="anode-icon" class="fas fa-shield-halved text-slate-400"></i>
-                        <div class="text-left font-bold italic leading-none">
-                            <p id="anode-status" class="text-sm text-slate-400 tracking-tight">Menunggu...</p>
-                        </div>
+                <div class="flex gap-4">
+                    <div class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-[11px] font-black italic border-b-4 border-emerald-500 shadow-lg">
+                        Mulai Riset: <span id="display-start-date">N/A</span>
                     </div>
                 </div>
             </header>
 
-            <!-- DASHBOARD CONTENT -->
-            <div class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 bg-slate-50 custom-scrollbar">
+            <!-- CONTENT AREA -->
+            <div id="content-area" class="flex-1 overflow-y-auto p-6 md:p-12 space-y-10 custom-scrollbar bg-[#f8fafc]">
                 
-                <!-- GRAPH CARD -->
-                <div class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-200">
-                    <div id="chart-main" class="w-full h-[450px]"></div>
-                </div>
-
-                <!-- TABLE CARD -->
-                <div class="bg-white rounded-[3rem] shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                        <h3 class="text-sm font-bold text-slate-800 italic flex items-center gap-2 leading-none">
-                            <i class="fas fa-list-ul text-emerald-500"></i> Log Data Terkonsolidasi
-                        </h3>
-                        <div id="data-counter" class="bg-slate-900 text-emerald-400 px-6 py-2 rounded-full text-[11px] font-bold shadow-xl italic border-b-4 border-emerald-900">
-                            0 Baris Data
+                <!-- TAB: LOG DATA -->
+                <div id="tab-logs" class="space-y-6">
+                    <!-- FILTER PANEL -->
+                    <div class="bg-white p-6 rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-wrap items-center gap-4 md:gap-8">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest">Benda Uji</label>
+                            <select id="filter-bu" class="w-full md:w-56 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold focus:border-emerald-500 outline-none cursor-pointer italic transition-all">
+                                <option value="ALL">Semua Benda Uji</option>
+                                <option value="M1">Benda Uji M1</option><option value="M4">Benda Uji M4</option>
+                                <option value="M10">Benda Uji M10</option><option value="M14">Benda Uji M14</option>
+                                <option value="MK22">Benda Uji MK22</option><option value="MK21">Benda Uji MK21</option>
+                                <option value="MK18">Benda Uji MK18</option><option value="MK17">Benda Uji MK17</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest">Metode Pengujian</label>
+                            <select id="filter-type" class="w-full md:w-48 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-emerald-700 focus:border-emerald-500 outline-none cursor-pointer italic transition-all">
+                                <option value="SACP">SACP (Proteksi)</option>
+                                <option value="HCP">Alami (Natural)</option>
+                            </select>
+                        </div>
+                        <div class="md:ml-auto flex gap-4 w-full md:w-auto">
+                            <button onclick="exportToExcel()" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-lg italic">
+                                <i class="fas fa-file-excel text-emerald-500"></i> Ekspor Laporan
+                            </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm border-collapse font-semibold italic">
-                            <thead id="table-head" class="bg-slate-50 text-[11px] font-bold text-slate-400 border-b border-slate-100 sticky top-0 z-20">
-                                <!-- Dinamis diisi JS -->
-                            </thead>
-                            <tbody id="log-table-body" class="divide-y divide-slate-100 text-slate-700">
-                                <!-- Data rows injected here -->
-                            </tbody>
-                        </table>
+
+                    <!-- TABLE AREA -->
+                    <div class="bg-white rounded-[2rem] md:rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden">
+                        <div class="table-container custom-scrollbar">
+                            <table class="w-full text-left text-[10px] border-collapse italic font-bold min-w-[1600px]">
+                                <thead id="table-head" class="bg-slate-50 font-black text-slate-400 uppercase tracking-tighter border-b border-slate-100">
+                                    <!-- Dinamis -->
+                                </thead>
+                                <tbody id="table-body" class="divide-y divide-slate-50 text-slate-700">
+                                    <!-- Dinamis -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: TREND GRAPH (POTENTIAL) -->
+                <div id="tab-trend" class="hidden space-y-6">
+                    <!-- TREND FILTER PANEL -->
+                    <div class="bg-white p-6 rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-wrap items-center gap-4 md:gap-8">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest">Benda Uji</label>
+                            <select id="trend-filter-bu" class="w-full md:w-56 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold focus:border-emerald-500 outline-none cursor-pointer italic transition-all">
+                                <option value="ALL">Semua Benda Uji</option>
+                                <option value="M1">Benda Uji M1</option><option value="M4">Benda Uji M4</option>
+                                <option value="M10">Benda Uji M10</option><option value="M14">Benda Uji M14</option>
+                                <option value="MK22">Benda Uji MK22</option><option value="MK21">Benda Uji MK21</option>
+                                <option value="MK18">Benda Uji MK18</option><option value="MK17">Benda Uji MK17</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest">Metode</label>
+                            <select id="trend-filter-method" class="w-full md:w-40 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-emerald-700 focus:border-emerald-500 outline-none cursor-pointer italic transition-all">
+                                <option value="SACP">SACP (Proteksi)</option>
+                                <option value="HCP">Alami (Natural)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest">Tipe Data</label>
+                            <select id="trend-filter-datatype" class="w-full md:w-40 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-blue-700 focus:border-emerald-500 outline-none cursor-pointer italic transition-all">
+                                <!-- Dinamis -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 md:p-10 rounded-[3rem] border border-slate-200 shadow-xl">
+                        <div class="mb-8 text-center md:text-left">
+                            <h3 class="text-xl font-black italic text-slate-800 uppercase">Tren Potensial Akhir</h3>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">Data Hasil Perhitungan Kompensasi Suhu</p>
+                        </div>
+                        <div id="chart-trend" class="w-full h-[550px]"></div>
+                    </div>
+                </div>
+
+                <!-- TAB: CURRENT TREND (CURRENT DENSITY) -->
+                <div id="tab-current" class="hidden space-y-6">
+                    <!-- CURRENT FILTER PANEL -->
+                    <div class="bg-slate-900 p-6 rounded-[2.5rem] shadow-xl border border-white/5 flex flex-wrap items-center gap-6">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-500 uppercase ml-2 tracking-widest">Pilih Sampel</label>
+                            <select id="filter-bu-current" class="w-56 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-emerald-400 outline-none cursor-pointer italic">
+                                <option value="ALL">Semua Benda Uji</option>
+                                <option value="M1">Benda Uji M1</option><option value="M4">Benda Uji M4</option>
+                                <option value="M10">Benda Uji M10</option><option value="M14">Benda Uji M14</option>
+                                <option value="MK22">Benda Uji MK22</option><option value="MK21">Benda Uji MK21</option>
+                                <option value="MK18">Benda Uji MK18</option><option value="MK17">Benda Uji MK17</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-slate-500 uppercase ml-2 tracking-widest">Luas Permukaan (m2)</label>
+                            <input type="number" id="input-surface-area" step="0.0001" value="0.05" onchange="window.updateCurrentChart()" class="w-40 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white outline-none focus:border-emerald-500 transition-all font-mono">
+                        </div>
+                        <div class="ml-auto text-right">
+                             <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest leading-none">Standar Perhitungan</p>
+                             <p class="text-xs text-slate-400 font-bold italic">J = I / A (mA/m2)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-6 md:p-10 rounded-[3.5rem] border-b-8 border-emerald-500 shadow-2xl">
+                        <div class="mb-10 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-black italic text-white uppercase">Analisis Rapat Arus (Current Density)</h3>
+                                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Satuan: Milliampere per Meter Persegi (mA/m2)</p>
+                            </div>
+                        </div>
+                        <div id="chart-current" class="w-full h-[450px]"></div>
+                    </div>
+                </div>
+
+                <!-- TAB: SETUP RISET -->
+                <div id="tab-setup" class="hidden grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-xl flex flex-col">
+                        <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3 text-slate-800">
+                            <i class="far fa-calendar-alt text-emerald-500"></i> Tanggal Mulai Riset
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-8 font-bold italic leading-relaxed">Penghitungan otomatis Hari Ke-n dimulai dari tanggal ini.</p>
+                        <input type="date" id="setup-start-date" class="w-full px-8 py-4 rounded-2xl border-2 border-slate-100 bg-slate-50 font-black outline-none focus:border-emerald-500 shadow-inner mb-6 transition-all">
+                        <button onclick="saveStartDate()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg hover:scale-[1.02] active:scale-95 transition-all mt-auto">Simpan Waktu</button>
+                    </div>
+
+                    <div class="bg-slate-900 p-10 rounded-[3rem] text-white shadow-2xl">
+                        <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3 text-emerald-400">
+                            <i class="fas fa-calculator"></i> Pengaturan Kalibrasi
+                        </h4>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm">
+                                <span class="text-[10px] font-black uppercase text-emerald-500">Koefisien A</span>
+                                <input type="number" id="poly-a" step="0.00000001" class="bg-transparent text-right outline-none font-mono text-white w-1/2">
+                            </div>
+                            <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm">
+                                <span class="text-[10px] font-black uppercase text-emerald-500">Koefisien B</span>
+                                <input type="number" id="poly-b" step="0.0001" class="bg-transparent text-right outline-none font-mono text-white w-1/2">
+                            </div>
+                            <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm">
+                                <span class="text-[10px] font-black uppercase text-emerald-500">Koefisien C</span>
+                                <input type="number" id="poly-c" step="0.1" class="bg-transparent text-right outline-none font-mono text-white w-1/2">
+                            </div>
+                        </div>
+                        <button onclick="saveCalibration()" class="w-full bg-emerald-500 text-slate-900 py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all">Simpan Kalibrasi</button>
                     </div>
                 </div>
 
@@ -180,17 +268,13 @@
         </main>
     </div>
 
-    <!-- TOAST NOTIF -->
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-10 py-5 rounded-full shadow-2xl z-50 transform translate-y-40 transition-all duration-700 flex items-center gap-4 border-b-4 border-emerald-500 italic">
-        <i class="fas fa-check-circle text-emerald-400 text-lg"></i>
-        <span id="toast-text" class="font-bold text-sm">Operasi Berhasil</span>
-    </div>
-
+    <!-- Firebase SDK & Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
+        // --- Konfigurasi Firebase Resmi ---
         const firebaseConfig = {
             apiKey: "AIzaSyA_tdRuWtUshubvm-lx2Et8OfB771wI9iU",
             authDomain: "korosi-iot.firebaseapp.com",
@@ -204,289 +288,409 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
-        const appIdStr = "korosi-iot";
-        const rootPath = `artifacts/${appIdStr}/public/data`;
 
+        const appId = "korosi-iot";
+        const basePath = `/artifacts/${appId}/public/data`;
+
+        // Global State
         let rawLogs = [];
-        let processedData = [];
-        let chartInstance = null;
+        let currentLogs = [];
+        let currentTab = 'logs';
+        let trendChart = null;
+        let currentChart = null;
 
-        const el = {
-            tableBody: document.getElementById('log-table-body'),
-            tableHead: document.getElementById('table-head'),
-            counter: document.getElementById('data-counter'),
-            filterBU: document.getElementById('filter-bu'),
-            filterType: document.getElementById('filter-type'),
-            filterData: document.getElementById('filter-data-type'),
-            anodeStatus: document.getElementById('anode-status'),
-            anodeIcon: document.getElementById('anode-icon'),
-            anodeBadge: document.getElementById('anode-badge'),
-            statusText: document.getElementById('status-text'),
-            statusDot: document.getElementById('status-dot')
+        // --- DOM Elements ---
+        const tableBody = document.getElementById('table-body');
+        const tableHead = document.getElementById('table-head');
+        const loader = document.getElementById('loader');
+
+        // --- AUTH & INITIALIZATION ---
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                await signInAnonymously(auth);
+            }
         };
 
-        function updateDataTypeOptions() {
-            const type = el.filterType.value;
-            el.filterData.innerHTML = "";
-            if (type === 'SACP') {
-                const options = [
-                    { val: 'on_avg', text: 'On Potensial' },
-                    { val: 'off_avg', text: 'Instant Off' },
-                    { val: 'rest_avg', text: 'Rest Potential' }
-                ];
-                options.forEach(opt => {
-                    const o = document.createElement('option');
-                    o.value = opt.val; o.innerText = opt.text;
-                    el.filterData.appendChild(o);
-                });
-            } else {
-                const o = document.createElement('option');
-                o.value = 'hcp_avg'; o.innerText = 'Potensial HCP';
-                el.filterData.appendChild(o);
-            }
-            processAndRender();
-        }
-
-        signInAnonymously(auth).catch(e => console.error(e));
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                el.statusText.innerText = "Terhubung Online";
-                el.statusDot.classList.replace('bg-rose-500', 'bg-emerald-500');
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('loader').classList.add('hidden'), 500);
-                initListeners();
-            }
+        initAuth().then(() => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    startSync();
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.classList.add('hidden'), 500);
+                    }, 1000);
+                }
+            });
         });
 
-        function initListeners() {
-            onValue(ref(db, `${rootPath}/calib`), (snap) => {
-                const d = snap.val();
-                if(d) {
-                    document.getElementById('input-a').value = d.poly_a || 0;
-                    document.getElementById('input-b').value = d.poly_b || 1;
-                    document.getElementById('input-c').value = d.poly_c || 0;
-                }
+        function startSync() {
+            onValue(ref(db, `${basePath}/logs`), (snapshot) => {
+                rawLogs = snapshot.exists() ? Object.values(snapshot.val()) : [];
+                window.renderLogTable();
+                if(currentTab === 'trend') window.updateTrendChart();
             });
 
-            onValue(ref(db, `${rootPath}/status_global`), (snap) => {
-                const d = snap.val();
-                if(d && d.status) {
-                    el.anodeStatus.innerText = d.status;
-                    if(d.status === 'PROTECTED') {
-                        el.anodeBadge.classList.replace('bg-slate-100', 'bg-emerald-500');
-                        el.anodeStatus.classList.replace('text-slate-400', 'text-white');
-                        el.anodeIcon.className = "fas fa-shield-check text-white animate-pulse";
-                    } else {
-                        el.anodeBadge.classList.replace('bg-emerald-500', 'bg-rose-500');
-                        el.anodeStatus.classList.replace('text-white', 'text-white');
-                        el.anodeIcon.className = "fas fa-shield-slash text-white";
-                    }
-                }
+            onValue(ref(db, `${basePath}/current_logs`), (snapshot) => {
+                currentLogs = snapshot.exists() ? Object.values(snapshot.val()) : [];
+                if(currentTab === 'current') window.updateCurrentChart();
             });
 
-            onValue(ref(db, `${rootPath}/logs`), (snapshot) => {
+            onValue(ref(db, `${basePath}/status_global`), (snapshot) => {
                 const data = snapshot.val();
-                if (data) { 
-                    rawLogs = Object.values(data); 
-                    updateDataTypeOptions(); 
+                if (data) {
+                    const txt = document.getElementById('status-text');
+                    const dot = document.getElementById('status-dot');
+                    const sync = document.getElementById('sync-time');
+                    const currentStatus = data.status === 'PROTECTED' ? 'PROTECTED' : 'OFF';
+                    if(txt) txt.innerText = currentStatus;
+                    if(dot) dot.className = `w-3 h-3 rounded-full transition-all duration-700 ${currentStatus === 'PROTECTED' ? 'bg-emerald-500 shadow-[0_0_10px_#10b981]' : 'bg-rose-500'}`;
+                    if(sync) sync.innerText = `Terakhir: ${data.last_update?.split(' ')[1] || '-'}`;
+                }
+            });
+
+            onValue(ref(db, `${basePath}/research_config`), (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    const dDate = document.getElementById('display-start-date');
+                    const iDate = document.getElementById('setup-start-date');
+                    if(dDate) dDate.innerText = data.start_date || 'N/A';
+                    if(iDate) iDate.value = data.start_date || '';
+                }
+            });
+
+            onValue(ref(db, `${basePath}/kalibrasi`), (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    const pa = document.getElementById('poly-a');
+                    const pb = document.getElementById('poly-b');
+                    const pc = document.getElementById('poly-c');
+                    if(pa) pa.value = data.poly_a || 0;
+                    if(pb) pb.value = data.poly_b || 1;
+                    if(pc) pc.value = data.poly_c || 0;
                 }
             });
         }
 
-        function processAndRender() {
-            const buFilter = el.filterBU.value;
-            const typeFilter = el.filterType.value;
-            const dataParam = el.filterData.value;
+        // --- RUMUS KONVERSI AKHIR ---
+        const calcFinalPotential = (sse, suhu) => {
+            if (!sse || sse === '-' || isNaN(sse)) return null;
+            const temp = suhu || 25;
+            // CSE = SSE - 74,5 - 1,66 * (Suhu - 25)
+            const result = parseFloat(sse) - 74.5 - (1.66 * (temp - 25));
+            return parseFloat(result.toFixed(1));
+        };
 
-            const map = new Map();
-            rawLogs.forEach(item => {
-                if (typeFilter === 'SACP' && item.fase === 'HCP') return;
-                if (typeFilter === 'HCP' && item.fase !== 'HCP') return;
+        // --- UI ACTIONS ---
+        window.switchTab = (tabId) => {
+            currentTab = tabId;
+            ['logs', 'trend', 'current', 'setup'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-${t}`);
+                if(el) el.classList.add('hidden');
+                if(btn) btn.classList.remove('tab-active');
+            });
+            const activeEl = document.getElementById(`tab-${tabId}`);
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if(activeEl) activeEl.classList.remove('hidden');
+            if(activeBtn) activeBtn.classList.add('tab-active');
+            
+            if(tabId === 'trend') {
+                updateTrendDataTypeOptions();
+                setTimeout(window.updateTrendChart, 100);
+            }
+            if(tabId === 'current') setTimeout(window.updateCurrentChart, 100);
 
-                const key = `${item.minggu}-${item.bu}-${item.tp}`;
-                if (!map.has(key)) {
-                    map.set(key, {
-                        minggu: item.minggu, bu: item.bu, tp: item.tp,
-                        tipe_titik: item.tipe_titik, suhu: item.suhu,
-                        arus: 0, on_avg: null, off_avg: null, rest_avg: null, hcp_avg: null,
-                        timestamp: item.timestamp
+            const pt = document.getElementById('page-title');
+            const titles = { logs: 'Data Monitoring', trend: 'Tren Korosi', current: 'Aliran Arus Proteksi', setup: 'Setup Riset' };
+            if(pt) pt.innerText = titles[tabId];
+        };
+
+        function updateTrendDataTypeOptions() {
+            const method = document.getElementById('trend-filter-method').value;
+            const typeSelect = document.getElementById('trend-filter-datatype');
+            
+            typeSelect.innerHTML = "";
+            if(method === 'SACP') {
+                typeSelect.innerHTML = `
+                    <option value="on_avg">Potensial ON</option>
+                    <option value="off_avg" selected>Potensial OFF</option>
+                    <option value="rest_avg">Potensial REST</option>
+                `;
+            } else {
+                typeSelect.innerHTML = `<option value="hcp_avg" selected>Potensial Alami</option>`;
+            }
+        }
+
+        // --- RENDER LOG TABLE ---
+        window.renderLogTable = () => {
+            const filterBU = document.getElementById('filter-bu').value;
+            const filterType = document.getElementById('filter-type').value;
+            tableBody.innerHTML = "";
+            
+            if(filterType === 'SACP') {
+                tableHead.innerHTML = `
+                    <tr class="bg-slate-100/50">
+                        <th class="px-3 py-4 sticky-col">Waktu</th>
+                        <th class="px-3 py-4 sticky-col" style="left: 65px">Sampel</th>
+                        <th class="px-3 py-4">Suhu</th>
+                        <th class="px-3 py-4">Zona</th>
+                        <th class="px-3 py-4 text-blue-400 border-l border-slate-200">ON (1)</th>
+                        <th class="px-3 py-4 text-blue-400">ON (2)</th>
+                        <th class="px-3 py-4 text-emerald-400 border-l border-slate-200">OFF (1)</th>
+                        <th class="px-3 py-4 text-emerald-400">OFF (2)</th>
+                        <th class="px-3 py-4 text-amber-400 border-l border-slate-200">REST (1)</th>
+                        <th class="px-3 py-4 text-amber-400">REST (2)</th>
+                        <th class="px-3 py-4 text-blue-600 bg-blue-50 border-l-2 border-blue-200 text-center">ON (Rata)</th>
+                        <th class="px-3 py-4 text-blue-600 bg-blue-50 text-center">ON (Zona)</th>
+                        <th class="px-3 py-4 text-blue-800 bg-blue-100 text-center">ON (Akhir)</th>
+                        <th class="px-3 py-4 text-emerald-600 bg-emerald-50 border-l-2 border-emerald-200 text-center">OFF (Rata)</th>
+                        <th class="px-3 py-4 text-emerald-600 bg-emerald-50 text-center">OFF (Zona)</th>
+                        <th class="px-3 py-4 text-emerald-800 bg-emerald-100 text-center">OFF (Akhir)</th>
+                        <th class="px-3 py-4 text-amber-600 bg-amber-50 border-l-2 border-amber-200 text-center">REST (Rata)</th>
+                        <th class="px-3 py-4 text-amber-600 bg-amber-50 text-center">REST (Zona)</th>
+                        <th class="px-3 py-4 text-amber-800 bg-amber-100 text-center font-black">REST (Akhir)</th>
+                    </tr>
+                `;
+            } else {
+                tableHead.innerHTML = `
+                    <tr class="bg-slate-100/50">
+                        <th class="px-5 py-4 sticky-col">Waktu</th>
+                        <th class="px-5 py-4 sticky-col" style="left: 80px">Sampel</th>
+                        <th class="px-5 py-4">Suhu</th>
+                        <th class="px-5 py-4">Zona</th>
+                        <th class="px-5 py-4 border-l border-slate-200 text-rose-400">ALAMI (1)</th>
+                        <th class="px-5 py-4 text-rose-400">ALAMI (2)</th>
+                        <th class="px-5 py-4 bg-rose-50 text-rose-600 border-l-2 border-rose-200 text-center">Rata-rata</th>
+                        <th class="px-5 py-4 bg-rose-50 text-rose-600 text-center">Zona</th>
+                        <th class="px-5 py-4 bg-rose-100 text-rose-900 text-center font-black">Hasil Akhir</th>
+                    </tr>
+                `;
+            }
+
+            const pairs = new Map();
+            rawLogs.forEach(l => {
+                const key = `${l.hari_ke}-${l.bu}-${l.tp}`;
+                if (!pairs.has(key)) {
+                    pairs.set(key, { 
+                        hari: l.hari_ke, bu: l.bu, tp: l.tp, typePoint: l.tipe_titik, suhu: l.suhu,
+                        on1: '-', on2: '-', onAvg: '-', off1: '-', off2: '-', offAvg: '-', 
+                        rest1: '-', rest2: '-', restAvg: '-', hcp1: '-', hcp2: '-', hcpAvg: '-'
                     });
                 }
-                const entry = map.get(key);
-                if (item.fase === 'PH1') {
-                    entry.on_avg = item.on_avg;
-                    entry.off_avg = item.off_avg;
-                    entry.arus = item.i_ma || 0;
-                } else if (item.fase === 'PH2') {
-                    entry.rest_avg = item.rest_avg || item.off_avg;
-                } else if (item.fase === 'HCP') {
-                    entry.hcp_avg = item.hcp_avg || item.off_avg;
+                const entry = pairs.get(key);
+                if (l.fase === 'PH1') {
+                    entry.on1 = l.on_1 || l.on_avg || '-';
+                    entry.on2 = l.on_2 || l.on_avg || '-';
+                    entry.onAvg = l.on_avg || '-';
+                    entry.off1 = l.off_1 || l.off_avg || '-';
+                    entry.off2 = l.off_2 || l.off_avg || '-';
+                    entry.offAvg = l.off_avg || '-';
+                } else if (l.fase === 'PH2') {
+                    entry.rest1 = l.v_off_1 || l.v_off_avg || '-';
+                    entry.rest2 = l.v_off_2 || l.v_off_avg || '-';
+                    entry.restAvg = l.v_off_avg || l.off_avg || '-';
+                } else if (l.fase === 'HCP') {
+                    entry.hcp1 = l.hcp_1 || l.hcp_avg || '-';
+                    entry.hcp2 = l.hcp_2 || l.hcp_avg || '-';
+                    entry.hcpAvg = l.hcp_avg || l.off_avg || '-';
                 }
             });
 
-            processedData = Array.from(map.values());
-            let finalData = buFilter === 'all' ? processedData : processedData.filter(d => d.bu === buFilter);
-            finalData.sort((a, b) => b.minggu - a.minggu || b.timestamp - a.timestamp);
+            const processed = Array.from(pairs.values()).filter(d => filterBU === 'ALL' || d.bu === filterBU);
 
-            renderTable(finalData, typeFilter);
-            prepareAndRenderChart(finalData, dataParam, typeFilter);
-        }
+            const getSSEValue = (hari, bu, typeP, valKey) => {
+                const sameType = processed.filter(p => p.hari === hari && p.bu === bu && p.typePoint === typeP);
+                const valid = sameType.filter(p => p[valKey] !== '-' && !isNaN(p[valKey]));
+                if (valid.length === 0) return '-';
+                const sum = valid.reduce((acc, curr) => acc + parseFloat(curr[valKey]), 0);
+                return (sum / valid.length).toFixed(1);
+            };
 
-        function prepareAndRenderChart(data, param, type) {
-            const weeks = [...new Set(data.map(d => d.minggu))].sort((a, b) => a - b);
-            const categories = weeks.map(w => `Minggu ${w}`);
+            processed.sort((a,b) => b.hari - a.hari).forEach(d => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-emerald-50/30 transition-all border-b border-slate-100 text-slate-700 font-bold";
+
+                if (filterType === 'SACP') {
+                    if (d.onAvg === '-' && d.restAvg === '-') return; 
+                    const sOnSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'onAvg');
+                    const sOffSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'offAvg');
+                    const sRestSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'restAvg');
+
+                    tr.innerHTML = `
+                        <td class="px-3 py-3 sticky-col text-slate-400 font-black">Hari ${d.hari}</td>
+                        <td class="px-3 py-3 sticky-col text-slate-900 font-extrabold uppercase" style="left: 65px">${d.bu}<br><span class="text-[8px] text-slate-400 font-mono">${d.tp}</span></td>
+                        <td class="px-3 py-3 text-rose-500">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
+                        <td class="px-3 py-3 text-slate-400 text-[8px] uppercase">${d.typePoint}</td>
+                        <td class="px-3 py-3 text-center border-l font-mono">${d.on1 !== '-' ? Math.round(d.on1) : '-'}</td>
+                        <td class="px-3 py-3 text-center font-mono">${d.on2 !== '-' ? Math.round(d.on2) : '-'}</td>
+                        <td class="px-3 py-3 text-center border-l font-mono">${d.off1 !== '-' ? Math.round(d.off1) : '-'}</td>
+                        <td class="px-3 py-3 text-center font-mono">${d.off2 !== '-' ? Math.round(d.off2) : '-'}</td>
+                        <td class="px-3 py-3 text-center border-l font-mono">${d.rest1 !== '-' ? Math.round(d.rest1) : '-'}</td>
+                        <td class="px-3 py-3 text-center font-mono">${d.rest2 !== '-' ? Math.round(d.rest2) : '-'}</td>
+                        <td class="px-3 py-3 text-center bg-blue-50 border-l-2 text-blue-600 font-mono">${d.onAvg !== '-' ? Math.round(d.onAvg) : '-'}</td>
+                        <td class="px-3 py-3 text-center bg-blue-50 text-blue-600 font-mono font-black">${sOnSSE}</td>
+                        <td class="px-3 py-3 text-center bg-blue-100 text-blue-900 font-mono font-black">${calcFinalPotential(sOnSSE, d.suhu) || '-'}</td>
+                        <td class="px-3 py-3 text-center bg-emerald-50 border-l-2 text-emerald-600 font-mono">${d.offAvg !== '-' ? Math.round(d.offAvg) : '-'}</td>
+                        <td class="px-3 py-3 text-center bg-emerald-50 text-emerald-600 font-mono font-black">${sOffSSE}</td>
+                        <td class="px-3 py-3 text-center bg-emerald-100 text-emerald-900 font-mono font-black">${calcFinalPotential(sOffSSE, d.suhu) || '-'}</td>
+                        <td class="px-3 py-3 text-center bg-amber-50 border-l-2 text-amber-600 font-mono">${d.restAvg !== '-' ? Math.round(d.restAvg) : '-'}</td>
+                        <td class="px-3 py-3 text-center bg-amber-50 text-amber-600 font-mono font-black">${sRestSSE}</td>
+                        <td class="px-3 py-3 text-center bg-amber-100 text-amber-900 font-mono font-black">${calcFinalPotential(sRestSSE, d.suhu) || '-'}</td>
+                    `;
+                } else {
+                    if (d.hcpAvg === '-') return; 
+                    const sHcpSSE = getSSEValue(d.hari, d.bu, d.typePoint, 'hcpAvg');
+                    tr.innerHTML = `
+                        <td class="px-5 py-4 sticky-col text-slate-400 font-black">Hari ${d.hari}</td>
+                        <td class="px-5 py-4 sticky-col text-slate-900 font-extrabold uppercase" style="left: 80px">${d.bu}<br><span class="text-[9px] text-slate-400 font-mono">${d.tp}</span></td>
+                        <td class="px-5 py-4 text-rose-500">${d.suhu ? d.suhu.toFixed(1) : '-'}°C</td>
+                        <td class="px-5 py-4 text-slate-400 text-[9px] font-bold italic uppercase">${d.typePoint}</td>
+                        <td class="px-5 py-4 text-center border-l font-mono">${d.hcp1 !== '-' ? Math.round(d.hcp1) : '-'}</td>
+                        <td class="px-5 py-4 text-center font-mono">${d.hcp2 !== '-' ? Math.round(d.hcp2) : '-'}</td>
+                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-600 border-l-2 font-mono font-black text-center">${d.hcpAvg !== '-' ? Math.round(d.hcpAvg) : '-'}</td>
+                        <td class="px-5 py-4 text-center bg-rose-50 text-rose-700 font-mono font-black text-center">${sHcpSSE}</td>
+                        <td class="px-5 py-4 text-center bg-rose-100 text-rose-950 font-mono font-black text-xs text-center">${calcFinalPotential(sHcpSSE, d.suhu) || '-'}</td>
+                    `;
+                }
+                tableBody.appendChild(tr);
+            });
+        };
+
+        // --- UPDATE TREND CHART ---
+        window.updateTrendChart = () => {
+            const bu = document.getElementById('trend-filter-bu').value;
+            const method = document.getElementById('trend-filter-method').value;
+            const dataType = document.getElementById('trend-filter-datatype').value;
+
+            const pairs = new Map();
+            rawLogs.forEach(l => {
+                const key = `${l.hari_ke}-${l.bu}-${l.tp}`;
+                if (!pairs.has(key)) pairs.set(key, { hari: l.hari_ke, bu: l.bu, tp: l.tp, typePoint: l.tipe_titik, suhu: l.suhu });
+                const entry = pairs.get(key);
+                if (l.fase === 'PH1') entry.on_avg = l.on_avg, entry.off_avg = l.off_avg;
+                if (l.fase === 'PH2') entry.rest_avg = l.v_off_avg || l.off_avg;
+                if (l.fase === 'HCP') entry.hcp_avg = l.hcp_avg || l.off_avg;
+            });
+
+            const processedData = Array.from(pairs.values()).filter(d => bu === 'ALL' || d.bu === bu);
+            const days = [...new Set(processedData.map(d => d.hari))].sort((a,b) => a - b);
             
-            const seriesData = {
-                'Patch Repair': [],
-                'Bounding': [],
-                'Existing': [],
-                'Arus': []
+            const getFinalAvgByZona = (hari, pointType) => {
+                const filtered = processedData.filter(p => p.hari === hari && p.typePoint === pointType);
+                const rawValues = filtered.map(f => f[dataType]).filter(v => v !== undefined && v !== '-');
+                if (rawValues.length === 0) return null;
+                const avgRaw = rawValues.reduce((a, b) => a + b, 0) / rawValues.length;
+                const avgSuhu = filtered.reduce((a, b) => a + (b.suhu || 25), 0) / filtered.length;
+                return calcFinalPotential(avgRaw, avgSuhu);
             };
 
-            weeks.forEach(w => {
-                const weekData = data.filter(d => d.minggu === w);
-                ['Patch Repair', 'Bounding', 'Existing'].forEach(tipe => {
-                    const logs = weekData.filter(d => d.tipe_titik === tipe && d[param] !== null);
-                    if (logs.length > 0) {
-                        const avg = logs.reduce((s, c) => s + c[param], 0) / logs.length;
-                        seriesData[tipe].push(Math.round(avg));
-                    } else {
-                        seriesData[tipe].push(null);
-                    }
-                });
+            const options = {
+                series: [
+                    { name: 'Zona Patch Repair', data: days.map(d => getFinalAvgByZona(d, 'Patch Repair')) },
+                    { name: 'Zona Bounding', data: days.map(d => getFinalAvgByZona(d, 'Bounding')) },
+                    { name: 'Zona Existing', data: days.map(d => getFinalAvgByZona(d, 'Existing')) }
+                ],
+                chart: { type: 'line', height: 500, toolbar: { show: true }, zoom: { enabled: true }, fontFamily: 'Plus Jakarta Sans' },
+                stroke: { width: 5, curve: 'smooth' },
+                colors: ['#10b981', '#f59e0b', '#3b82f6'],
+                xaxis: { categories: days.map(d => `H-${d}`), labels: { style: { colors: '#94a3b8', fontWeight: 700 } } },
+                yaxis: { 
+                    min: -1200, max: 0, tickAmount: 12,
+                    labels: { style: { colors: '#64748b' }, formatter: (v) => v ? v.toFixed(0) + " mV" : v },
+                    title: { text: "Potensial Korosi (mV)", style: { color: '#64748b', fontWeight: 800 } }
+                },
+                markers: { size: 6, strokeWidth: 3 },
+                grid: { borderColor: '#f1f5f9' },
+                legend: { position: 'top', fontWeight: 700 },
+                tooltip: { shared: true, theme: 'light' }
+            };
 
-                if (type === 'SACP') {
-                    const logsArus = weekData.filter(d => d.arus !== null);
-                    const avgArus = logsArus.length > 0 ? (logsArus.reduce((s, c) => s + c.arus, 0) / logsArus.length) : 0;
-                    seriesData['Arus'].push(parseFloat(avgArus.toFixed(2)));
-                }
+            if(trendChart) trendChart.destroy();
+            const el = document.querySelector("#chart-trend");
+            if(el) { trendChart = new ApexCharts(el, options); trendChart.render(); }
+        };
+
+        // --- UPDATE CURRENT CHART ---
+        window.updateCurrentChart = () => {
+            const bu = document.getElementById('filter-bu-current').value;
+            const area = parseFloat(document.getElementById('input-surface-area').value) || 1.0;
+            let buData = currentLogs;
+            
+            if (bu !== 'ALL') {
+                buData = currentLogs.filter(l => l.bu === bu);
+            }
+
+            // Group by Time for Average if ALL is selected
+            const timeMap = new Map();
+            buData.forEach(d => {
+                const timeStr = d.waktu_lokal?.split(' ')[1].substring(0, 5);
+                if (!timeMap.has(timeStr)) timeMap.set(timeStr, []);
+                timeMap.get(timeStr).push(parseFloat(d.i_ma || 0));
             });
 
-            // FIX PEMETAAN SUMBU: Hubungkan seri dengan nama sumbu Y yang sesuai
-            const chartOptions = {
-                series: [
-                    { name: 'Patch Repair', type: 'line', data: seriesData['Patch Repair'] },
-                    { name: 'Bounding', type: 'line', data: seriesData['Bounding'] },
-                    { name: 'Existing', type: 'line', data: seriesData['Existing'] }
-                ],
-                chart: { 
-                    height: 450, 
-                    type: 'line', 
-                    toolbar: { show: false }, 
-                    fontFamily: 'Plus Jakarta Sans',
-                    dropShadow: { enabled: true, top: 10, left: 0, blur: 10, opacity: 0.1 }
-                },
-                stroke: { width: [5, 5, 5, 0], curve: 'smooth' },
-                colors: ['#10b981', '#f59e0b', '#3b82f6', '#cbd5e1'],
-                markers: { size: 6, strokeWidth: 3 },
-                xaxis: { categories: categories },
-                yaxis: [
-                    { 
-                        seriesName: 'Patch Repair', // Ini mengikat 3 line pertama ke sumbu mV
-                        min: -1200,
-                        max: 0,
-                        tickAmount: 6,
-                        title: { text: "Potensial (mV)", style: { color: '#1e293b', fontWeight: 800 } },
-                        labels: { 
-                            style: { colors: '#64748b', fontWeight: 600 },
-                            formatter: (val) => val.toFixed(0) + " mV"
-                        },
-                        reversed: true 
-                    },
-                    {
-                        seriesName: 'Patch Repair', // Sumbu dummy untuk Bounding agar skala sama
-                        show: false, min: -1200, max: 0, reversed: true
-                    },
-                    {
-                        seriesName: 'Patch Repair', // Sumbu dummy untuk Existing agar skala sama
-                        show: false, min: -1200, max: 0, reversed: true
-                    }
-                ],
-                tooltip: { shared: true, intersect: false },
-                legend: { position: 'top', fontWeight: 700 }
+            const sortedTimes = Array.from(timeMap.keys()).sort();
+            const cdData = sortedTimes.map(time => {
+                const values = timeMap.get(time);
+                const avgMA = values.reduce((a,b) => a+b, 0) / values.length;
+                return parseFloat((avgMA / area).toFixed(3));
+            });
+
+            const opt = {
+                series: [{ name: 'Rapat Arus (mA/m2)', data: cdData }],
+                chart: { type: 'area', height: 400, toolbar: { show: true }, background: 'transparent' },
+                theme: { mode: 'dark' },
+                colors: ['#10b981'],
+                stroke: { curve: 'smooth', width: 4 },
+                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } },
+                xaxis: { categories: sortedTimes, labels: { style: { colors: '#64748b', fontWeight: 600 } } },
+                yaxis: { labels: { style: { colors: '#64748b' }, formatter: (v) => v + " mA/m2" }, title: { text: "Current Density (J)", style: { color: '#10b981', fontWeight: 700 } } },
+                grid: { borderColor: '#1e293b', strokeDashArray: 4 },
+                tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA/m2" } }
             };
 
-            if (type === 'SACP') {
-                chartOptions.series.push({ name: 'Arus Proteksi (mA)', type: 'column', data: seriesData['Arus'] });
-                chartOptions.yaxis.push({
-                    seriesName: 'Arus Proteksi (mA)', // Sumbu khusus untuk Arus (indeks ke-4)
-                    opposite: true,
-                    min: 0,
-                    max: 5,
-                    tickAmount: 5,
-                    title: { text: "Arus (mA)", style: { color: '#64748b', fontWeight: 800 } },
-                    labels: { 
-                        style: { colors: '#64748b', fontWeight: 600 },
-                        formatter: (val) => val.toFixed(1) + " mA"
-                    },
-                    reversed: false 
-                });
-            }
-
-            if (chartInstance) chartInstance.destroy();
-            chartInstance = new ApexCharts(document.querySelector("#chart-main"), chartOptions);
-            chartInstance.render();
-        }
-
-        function renderTable(data, type) {
-            el.tableBody.innerHTML = "";
-            el.counter.innerText = `${data.length} Baris Data`;
-
-            if (type === 'SACP') {
-                el.tableHead.innerHTML = `<tr><th class="px-6 py-5">Minggu</th><th class="px-6 py-5">Benda Uji</th><th class="px-6 py-5 text-center">T/P</th><th class="px-6 py-5 text-center">Tipe Titik</th><th class="px-6 py-5 text-center text-amber-600">Arus (mA)</th><th class="px-6 py-5 text-center text-emerald-600">On (mV)</th><th class="px-6 py-5 text-center text-emerald-600">Off (mV)</th><th class="px-6 py-5 text-center text-blue-600 bg-emerald-50/50">Rest (mV)</th></tr>`;
-                data.forEach((row, i) => {
-                    const tr = document.createElement('tr');
-                    tr.className = "row-animate hover:bg-slate-50 border-b border-slate-100";
-                    tr.style.animationDelay = `${i * 0.03}s`;
-                    tr.innerHTML = `<td class="px-6 py-5 text-slate-400">Minggu ${row.minggu}</td><td class="px-6 py-5 text-slate-900 font-extrabold text-base">${row.bu}</td><td class="px-6 py-5 text-center font-mono text-xs text-slate-400">${row.tp}</td><td class="px-6 py-5 text-center">${getTypeBadge(row.tipe_titik)}</td><td class="px-6 py-5 text-center font-mono text-amber-600">${row.arus.toFixed(2)}</td><td class="px-6 py-5 text-center font-mono text-emerald-700">${row.on_avg ? Math.round(row.on_avg) : '-'}</td><td class="px-6 py-5 text-center font-mono text-emerald-700">${row.off_avg ? Math.round(row.off_avg) : '-'}</td><td class="px-6 py-5 text-center bg-emerald-50/30 font-black text-blue-600 italic text-lg">${row.rest_avg ? Math.round(row.rest_avg) : '-'}</td>`;
-                    el.tableBody.appendChild(tr);
-                });
-            } else {
-                el.tableHead.innerHTML = `<tr><th class="px-10 py-5">Minggu</th><th class="px-10 py-5">Benda Uji</th><th class="px-10 py-5 text-center">T/P</th><th class="px-10 py-5 text-center">Tipe Titik</th><th class="px-10 py-5 text-center bg-emerald-50/50 text-emerald-600">Potensial HCP (mV)</th></tr>`;
-                data.forEach((row, i) => {
-                    const tr = document.createElement('tr');
-                    tr.className = "row-animate hover:bg-slate-50 border-b border-slate-100";
-                    tr.style.animationDelay = `${i * 0.03}s`;
-                    tr.innerHTML = `<td class="px-10 py-5 text-slate-400">Minggu ${row.minggu}</td><td class="px-10 py-5 text-slate-900 font-extrabold text-base">${row.bu}</td><td class="px-10 py-5 text-center font-mono text-xs text-slate-400">${row.tp}</td><td class="px-10 py-5 text-center">${getTypeBadge(row.tipe_titik)}</td><td class="px-10 py-5 text-center bg-emerald-50/30 font-black text-emerald-600 italic text-xl">${row.hcp_avg ? Math.round(row.hcp_avg) : '-'}</td>`;
-                    el.tableBody.appendChild(tr);
-                });
-            }
-        }
-
-        function getTypeBadge(type) {
-            let className = "bg-slate-100 text-slate-500";
-            if (type === "Patch Repair") className = "badge-patch";
-            else if (type === "Bounding") className = "badge-bounding";
-            else if (type === "Existing") className = "badge-existing";
-            return `<span class="px-3 py-1 rounded-full text-[10px] font-bold italic tracking-tight ${className}">${type || 'Umum'}</span>`;
-        }
-
-        el.filterType.onchange = updateDataTypeOptions;
-        el.filterBU.onchange = processAndRender;
-        el.filterData.onchange = processAndRender;
-
-        document.getElementById('btn-save-cal').onclick = () => {
-            const a = parseFloat(document.getElementById('input-a').value) || 0;
-            const b = parseFloat(document.getElementById('input-b').value) || 1;
-            const c = parseFloat(document.getElementById('input-c').value) || 0;
-            set(ref(db, `${rootPath}/calib`), { poly_a: a, poly_b: b, poly_c: c }).then(() => alert("Parameter Kalibrasi Berhasil Diperbarui!"));
+            if(currentChart) currentChart.destroy();
+            const el = document.querySelector("#chart-current");
+            if(el) { currentChart = new ApexCharts(el, opt); currentChart.render(); }
         };
 
-        document.getElementById('btn-export').onclick = () => {
-            if (!processedData.length) return alert("Tidak ada data.");
-            const type = el.filterType.value;
-            let excelRows = processedData.map(d => ({
-                'Minggu': d.minggu, 'BU': d.bu, 'TP': d.tp, 'Tipe Titik': d.tipe_titik, 'Suhu': d.suhu,
-                'Arus(mA)': d.arus, 'On_Avg': d.on_avg, 'Off_Avg': d.off_avg, 'Rest_Avg': d.rest_avg, 'HCP_Avg': d.hcp_avg
-            }));
-            const ws = XLSX.utils.json_to_sheet(excelRows);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan Riset");
-            XLSX.writeFile(wb, `Laporan_CorroVision_${type}_v13.1.xlsx`);
+        window.saveStartDate = () => {
+            const val = document.getElementById('setup-start-date').value;
+            if(!val) return;
+            const ts = Math.floor(new Date(val).getTime() / 1000);
+            set(ref(db, `${basePath}/research_config`), { start_date: val, start_timestamp: ts }).then(() => alert("Waktu Riset Disimpan!"));
         };
+
+        window.saveCalibration = () => {
+            const data = {
+                poly_a: parseFloat(document.getElementById('poly-a').value) || 0,
+                poly_b: parseFloat(document.getElementById('poly-b').value) || 1,
+                poly_c: parseFloat(document.getElementById('poly-c').value) || 0
+            };
+            set(ref(db, `${basePath}/kalibrasi`), data).then(() => alert("Kalibrasi Berhasil Disinkronkan!"));
+        };
+
+        window.exportToExcel = () => {
+            const filterType = document.getElementById('filter-type').value;
+            const table = document.querySelector("table");
+            const wb = XLSX.utils.table_to_book(table);
+            XLSX.writeFile(wb, `Laporan_Riset_${filterType}_${new Date().toISOString().split('T')[0]}.xlsx`);
+        };
+
+        // Listeners
+        document.getElementById('filter-bu').addEventListener('change', window.renderLogTable);
+        document.getElementById('filter-type').addEventListener('change', window.renderLogTable);
+        document.getElementById('filter-bu-current').addEventListener('change', window.updateCurrentChart);
+        document.getElementById('trend-filter-bu').addEventListener('change', window.updateTrendChart);
+        document.getElementById('trend-filter-method').addEventListener('change', () => { updateTrendDataTypeOptions(); window.updateTrendChart(); });
+        document.getElementById('trend-filter-datatype').addEventListener('change', window.updateTrendChart);
+
+        switchTab('logs');
     </script>
 </body>
 </html>
-
-
-
