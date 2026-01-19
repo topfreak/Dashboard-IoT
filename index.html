@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRCP Hub v34.0</title>
+    <title>SPRCP Master Hub v37.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
 
     <div id="loader" class="fixed inset-0 z-[99] bg-slate-950 flex flex-col items-center justify-center text-white transition-opacity duration-500">
         <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center uppercase tracking-tighter">SPRCP<br><span class="text-[9px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-[0.3em]">System V34</span></h2>
+        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center uppercase tracking-tighter">SPRCP<br><span class="text-[9px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-[0.3em]">System V37</span></h2>
     </div>
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
@@ -38,7 +38,7 @@
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-white flex flex-col shadow-2xl transform -translate-x-full transition-transform duration-300 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0 overflow-y-auto">
             <div class="p-6 border-b border-slate-800 flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">SPRCP<span class="text-emerald-400">.v34</span></h1>
+                    <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">SPRCP<span class="text-emerald-400">.v37</span></h1>
                     <p class="text-[8px] text-slate-500 font-bold uppercase mt-1 tracking-widest leading-none">Smart Patch Repair<br>Cathodic Protection</p>
                 </div>
                 <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
@@ -101,7 +101,11 @@
                     <div class="bg-white p-4 md:p-6 rounded-[2rem] border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest" data-i18n="lbl_specimen">Benda Uji</label>
-                            <select id="filter-bu" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold focus:border-emerald-500 outline-none"><option value="ALL">Semua / All</option><option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option><option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option></select>
+                            <select id="filter-bu" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold focus:border-emerald-500 outline-none">
+                                <option value="ALL">Semua Benda Uji</option>
+                                <option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option>
+                                <option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option>
+                            </select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest" data-i18n="lbl_method">Metode</label>
@@ -129,7 +133,7 @@
                     <div class="bg-white p-4 md:p-6 rounded-[2rem] border border-slate-200 shadow-sm grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                         <div class="space-y-1 col-span-2 md:col-span-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest" data-i18n="lbl_specimen">Benda Uji</label>
-                            <select id="trend-bu" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold outline-none"><option value="ALL">Semua</option><option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option><option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option></select>
+                            <select id="trend-bu" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold outline-none"><option value="ALL">Semua Benda Uji</option><option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option><option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option></select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-400 uppercase ml-2 tracking-widest" data-i18n="lbl_method">Metode</label>
@@ -157,11 +161,11 @@
                     <div class="bg-slate-900 p-4 md:p-6 rounded-[2rem] shadow-xl border border-white/5 grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-500 uppercase ml-2 tracking-widest" data-i18n="lbl_specimen">Benda Uji</label>
-                            <select id="current-bu" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-emerald-400 outline-none"><option value="ALL">Semua</option><option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option><option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option></select>
+                            <select id="current-bu" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-emerald-400 outline-none"><option value="ALL">Semua Benda Uji</option><option value="M1">M1</option><option value="M4">M4</option><option value="M10">M10</option><option value="M14">M14</option><option value="MK22">MK22</option><option value="MK21">MK21</option><option value="MK18">MK18</option><option value="MK17">MK17</option></select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-500 uppercase ml-2 tracking-widest" data-i18n="lbl_interval">Interval</label>
-                            <select id="current-interval" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white outline-none"><option value="1">Harian</option><option value="3">3 Hari</option><option value="7">7 Hari</option><option value="14">14 Hari</option></select>
+                            <select id="current-interval" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white outline-none"><option value="1">Harian</option><option value="3">Per 3 Hari</option><option value="7">Per 7 Hari</option><option value="14">Per 14 Hari</option></select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-500 uppercase ml-2 tracking-widest" data-i18n="lbl_area">Luas (m²)</label>
@@ -212,12 +216,41 @@
         let trendChart = null, flowChart = null, densityChart = null;
         const tableBody = document.getElementById('table-body'), tableHead = document.getElementById('table-head'), loader = document.getElementById('loader');
 
-        // MOBILE SIDEBAR TOGGLE
         window.toggleSidebar = () => { const sb = document.getElementById('sidebar'); const ov = document.getElementById('sidebar-overlay'); if(sb.classList.contains('-translate-x-full')) { sb.classList.remove('-translate-x-full'); ov.classList.remove('hidden'); } else { sb.classList.add('-translate-x-full'); ov.classList.add('hidden'); } };
 
         const i18n = {
-            id: { nav_logs: "Log Data", nav_trend: "Grafik Potensial", nav_current: "Arus & Densitas", nav_setup: "Setup Riset", sys_status: "Status Sistem", last_sync: "Sinkronisasi", start_date: "Mulai Riset", lbl_specimen: "Benda Uji", lbl_method: "Metode", lbl_datatype: "Tipe Data", lbl_tulangan: "Tulangan", lbl_interval: "Interval Waktu", lbl_sort: "Urutan Waktu", lbl_area: "Luas (m²)", opt_daily: "Harian", opt_3days: "Per 3 Hari", opt_7days: "Per 7 Hari", opt_14days: "Per 14 Hari", opt_all: "Semua Benda Uji", btn_export: "Ekspor Excel", btn_save: "Simpan Konfigurasi", btn_send: "Kirim Ke Perangkat", axis_days: "Waktu Paparan (Hari)", axis_pot: "Potensial (mV vs CSE)", axis_flow: "Arus (mA)", axis_density: "Densitas Arus (mA/m²)", calib_title: "Kalibrasi SPRCP", coeff_a: "Koefisien A", coeff_b: "Koefisien B", coeff_c: "Koefisien C", rebar_1: "Tulangan 1", rebar_2: "Tulangan 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", th_time_ph1: "Waktu PH1", th_time_ph2: "Waktu PH2", th_time: "Waktu", th_sample: "Sampel", th_temp: "Suhu", th_zone: "Zona", sort_new: "Baru -> Lama", sort_old: "Lama -> Baru", title_pot_chart: "Grafik Potensial Korosi", title_flow_chart: "Grafik Arus Listrik (Current Flow)", title_dens_chart: "Grafik Rapat Arus (Current Density)" },
-            en: { nav_logs: "Data Logs", nav_trend: "Potential Graphs", nav_current: "Current & Density", nav_setup: "Research Setup", sys_status: "System Status", last_sync: "Last Sync", start_date: "Start Date", lbl_specimen: "Specimen", lbl_method: "Method", lbl_datatype: "Data Type", lbl_tulangan: "Rebar", lbl_interval: "Time Interval", lbl_sort: "Time Sort", lbl_area: "Area (m²)", opt_daily: "Daily", opt_3days: "Every 3 Days", opt_7days: "Every 7 Days", opt_14days: "Every 14 Days", opt_all: "All Specimens", btn_export: "Export Excel", btn_save: "Save Config", btn_send: "Send to Device", axis_days: "Exposure Time (Days)", axis_pot: "Potential (mV vs CSE)", axis_flow: "Current (mA)", axis_density: "Current Density (mA/m²)", calib_title: "SPRCP Calibration", coeff_a: "Coefficient A", coeff_b: "Coefficient B", coeff_c: "Coefficient C", rebar_1: "Rebar 1", rebar_2: "Rebar 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", th_time_ph1: "Time PH1", th_time_ph2: "Time PH2", th_time: "Time", th_sample: "Specimen", th_temp: "Temp", th_zone: "Zone", sort_new: "Newest -> Oldest", sort_old: "Oldest -> Newest", title_pot_chart: "Corrosion Potential Chart", title_flow_chart: "Current Flow Chart", title_dens_chart: "Current Density Chart" }
+            id: { 
+                nav_logs: "Log Data", nav_trend: "Grafik Potensial", nav_current: "Arus & Densitas", nav_setup: "Setup Riset", 
+                sys_status: "Status Sistem", last_sync: "Sinkronisasi", start_date: "Mulai Riset", 
+                lbl_specimen: "Benda Uji", lbl_method: "Metode", lbl_datatype: "Tipe Data", lbl_tulangan: "Tulangan", 
+                lbl_interval: "Interval Waktu", lbl_sort: "Urutan Waktu", lbl_area: "Luas (m²)", 
+                opt_daily: "Harian", opt_3days: "Per 3 Hari", opt_7days: "Per 7 Hari", opt_14days: "Per 14 Hari", opt_all: "Semua Benda Uji", 
+                btn_export: "Ekspor Excel", btn_save: "Simpan Konfigurasi", btn_send: "Kirim Ke Perangkat", 
+                axis_days: "Waktu Paparan (Hari)", axis_pot: "Potensial (mV vs CSE)", axis_flow: "Arus (mA)", axis_density: "Densitas Arus (mA/m²)", 
+                calib_title: "Kalibrasi SPRCP", coeff_a: "Koefisien A", coeff_b: "Koefisien B", coeff_c: "Koefisien C", 
+                rebar_1: "Tulangan 1", rebar_2: "Tulangan 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", 
+                th_time_ph1: "Waktu PH1", th_time_ph2: "Waktu PH2", th_time: "Waktu", th_sample: "Sampel", th_temp: "Suhu", th_zone: "Zona", 
+                sort_new: "Baru -> Lama", sort_old: "Lama -> Baru", 
+                title_pot_chart: "Grafik Potensial Korosi", 
+                title_flow_chart: "Grafik Arus Listrik (Current Flow)", 
+                title_density_chart: "Grafik Rapat Arus (Current Density)" 
+            },
+            en: { 
+                nav_logs: "Data Logs", nav_trend: "Potential Graphs", nav_current: "Current & Density", nav_setup: "Research Setup", 
+                sys_status: "System Status", last_sync: "Last Sync", start_date: "Start Date", 
+                lbl_specimen: "Specimen", lbl_method: "Method", lbl_datatype: "Data Type", lbl_tulangan: "Rebar", 
+                lbl_interval: "Time Interval", lbl_sort: "Time Sort", lbl_area: "Area (m²)", 
+                opt_daily: "Daily", opt_3days: "Every 3 Days", opt_7days: "Every 7 Days", opt_14days: "Every 14 Days", opt_all: "All Specimens", 
+                btn_export: "Export Excel", btn_save: "Save Config", btn_send: "Send to Device", 
+                axis_days: "Exposure Time (Days)", axis_pot: "Potential (mV vs CSE)", axis_flow: "Current (mA)", axis_density: "Current Density (mA/m²)", 
+                calib_title: "SPRCP Calibration", coeff_a: "Coefficient A", coeff_b: "Coefficient B", coeff_c: "Coefficient C", 
+                rebar_1: "Rebar 1", rebar_2: "Rebar 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", 
+                th_time_ph1: "Time PH1", th_time_ph2: "Time PH2", th_time: "Time", th_sample: "Specimen", th_temp: "Temp", th_zone: "Zone", 
+                sort_new: "Newest -> Oldest", sort_old: "Oldest -> Newest", 
+                title_pot_chart: "Corrosion Potential Chart", 
+                title_flow_chart: "Current Flow Chart", 
+                title_density_chart: "Current Density Chart" 
+            }
         };
 
         const initAuth = async () => { try { if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token); else await signInAnonymously(auth); } catch (error) { await signInAnonymously(auth); } };
@@ -249,23 +282,11 @@
             document.getElementById('lang-id').className = lang === 'id' ? 'px-2 md:px-3 py-1 rounded text-[10px] font-bold transition-all bg-emerald-500 text-white shadow-md' : 'px-2 md:px-3 py-1 rounded text-[10px] font-bold transition-all text-slate-400 hover:text-slate-600';
             document.getElementById('lang-en').className = lang === 'en' ? 'px-2 md:px-3 py-1 rounded text-[10px] font-bold transition-all bg-emerald-500 text-white shadow-md' : 'px-2 md:px-3 py-1 rounded text-[10px] font-bold transition-all text-slate-400 hover:text-slate-600';
             document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if(i18n[lang][key]) el.innerText = i18n[lang][key]; });
-            
-            // Fix Dropdown Translations
             const tulSelect = document.getElementById('trend-tulangan'); if(tulSelect && tulSelect.options.length >= 2) { tulSelect.options[0].text = i18n[lang].rebar_1; tulSelect.options[1].text = i18n[lang].rebar_2; }
             const sortSelect = document.getElementById('filter-sort'); if(sortSelect) { sortSelect.options[0].text = i18n[lang].sort_new; sortSelect.options[1].text = i18n[lang].sort_old; }
             [document.getElementById('filter-bu'), document.getElementById('trend-bu'), document.getElementById('current-bu')].forEach(sel => { if(sel) sel.options[0].text = i18n[lang].opt_all; });
-            
-            // Interval Translations
             const intervalSelects = [document.getElementById('trend-interval'), document.getElementById('current-interval')];
-            intervalSelects.forEach(sel => {
-                if(sel) {
-                    sel.options[0].text = i18n[lang].opt_daily;
-                    sel.options[1].text = i18n[lang].opt_3days;
-                    sel.options[2].text = i18n[lang].opt_7days;
-                    sel.options[3].text = i18n[lang].opt_14days;
-                }
-            });
-
+            intervalSelects.forEach(sel => { if(sel) { sel.options[0].text = i18n[lang].opt_daily; sel.options[1].text = i18n[lang].opt_3days; sel.options[2].text = i18n[lang].opt_7days; sel.options[3].text = i18n[lang].opt_14days; } });
             window.renderLogTable(); if(currentTab === 'trend') window.updateTrendChart(); if(currentTab === 'current') { window.updateFlowChart(); window.updateDensityChart(); }
         }
 
@@ -276,6 +297,7 @@
             window.updateTrendChart();
         }
 
+        // --- CHART: POTENTIAL ---
         window.updateTrendChart = () => {
             const bu = document.getElementById('trend-bu').value;
             const method = document.getElementById('trend-method').value;
@@ -283,8 +305,8 @@
             const tulanganVal = document.getElementById('trend-tulangan').value;
             const interval = parseInt(document.getElementById('trend-interval').value);
 
-            const buText = bu === 'ALL' ? i18n[currentLang].opt_all : bu;
-            const tulanganText = tulanganVal === 'T1' ? i18n[currentLang].rebar_1 : i18n[currentLang].rebar_2;
+            const buText = document.getElementById('trend-bu').options[document.getElementById('trend-bu').selectedIndex].text;
+            const tulanganText = document.getElementById('trend-tulangan').options[document.getElementById('trend-tulangan').selectedIndex].text;
             const chartTitle = `${i18n[currentLang].title_pot_chart} - ${buText} - ${method} - ${tulanganText}`;
 
             let yLabel = i18n[currentLang].axis_pot;
@@ -342,7 +364,7 @@
                 colors: ['#10b981', '#f59e0b', '#3b82f6'],
                 xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { fontWeight: 700 } }, tickAmount: 'dataPoints', labels: { formatter: (val) => Math.round(val) } },
                 yaxis: { min: -1200, max: 0, tickAmount: 12, title: { text: yLabel, style: { fontWeight: 700, color: '#64748b' } }, labels: { formatter: (v) => v ? v.toFixed(0) : v } },
-                markers: { size: 8, strokeWidth: 0, fillOpacity: 1, showNullDataPoints: true, hover: { size: 10 } },
+                markers: { size: 6, strokeWidth: 1, strokeColors: '#fff', fillOpacity: 1, showNullDataPoints: true, hover: { size: 8 } },
                 grid: { borderColor: '#f1f5f9', padding: { left: 50, right: 50 } }, 
                 tooltip: { shared: true, y: { formatter: (v) => v ? v + " mV" : "-" } }
             };
@@ -378,16 +400,18 @@
         window.updateFlowChart = () => {
             const { flowData } = processCurrentData();
             const buName = document.getElementById('current-bu').options[document.getElementById('current-bu').selectedIndex].text;
-            const chartTitle = `${i18n[currentLang].title_flow_chart} - ${buName}`;
-            const options = { series: [{ name: 'Current Flow', data: flowData }], chart: { type: 'area', height: '100%', fontFamily: 'Plus Jakarta Sans', background: 'transparent', toolbar: { show: true }, animations: { enabled: false } }, title: { text: chartTitle, style: { color: '#fff', fontSize: '14px' } }, theme: { mode: 'dark' }, colors: ['#34d399'], stroke: { width: 3, curve: 'straight' }, fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } }, xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' }, formatter: (val) => Math.round(val) }, tickAmount: 'dataPoints' }, yaxis: { title: { text: i18n[currentLang].axis_flow, style: { color: '#34d399' } }, labels: { style: { colors: '#94a3b8' } } }, markers: { size: 6, strokeWidth: 0, fillOpacity: 1, showNullDataPoints: true }, grid: { borderColor: '#334155', padding: { left: 50, right: 50 } }, tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA" } } };
+            const baseTitle = i18n[currentLang].title_flow_chart;
+            const chartTitle = `${baseTitle} - ${buName}`;
+            const options = { series: [{ name: 'Current Flow', data: flowData }], chart: { type: 'area', height: '100%', fontFamily: 'Plus Jakarta Sans', background: 'transparent', toolbar: { show: true }, animations: { enabled: false } }, title: { text: chartTitle, style: { color: '#fff', fontSize: '14px' } }, theme: { mode: 'dark' }, colors: ['#34d399'], stroke: { width: 3, curve: 'straight' }, fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } }, xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' }, formatter: (val) => Math.round(val) }, tickAmount: 'dataPoints' }, yaxis: { title: { text: i18n[currentLang].axis_flow, style: { color: '#34d399' } }, labels: { style: { colors: '#94a3b8' } } }, markers: { size: 6, strokeWidth: 1, strokeColors: '#fff', fillOpacity: 1, showNullDataPoints: true }, grid: { borderColor: '#334155', padding: { left: 50, right: 50 } }, tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA" } } };
             if(flowChart) flowChart.destroy(); const el = document.querySelector("#chart-flow"); if(el) { flowChart = new ApexCharts(el, options); flowChart.render(); }
         };
 
         window.updateDensityChart = () => {
             const { densityData } = processCurrentData();
             const buName = document.getElementById('current-bu').options[document.getElementById('current-bu').selectedIndex].text;
-            const chartTitle = `${i18n[currentLang].title_density_chart} - ${buName}`;
-            const options = { series: [{ name: 'Current Density', data: densityData }], chart: { type: 'area', height: '100%', fontFamily: 'Plus Jakarta Sans', background: 'transparent', toolbar: { show: true }, animations: { enabled: false } }, title: { text: chartTitle, style: { color: '#fff', fontSize: '14px' } }, theme: { mode: 'dark' }, colors: ['#60a5fa'], stroke: { width: 3, curve: 'straight' }, fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } }, xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' }, formatter: (val) => Math.round(val) }, tickAmount: 'dataPoints' }, yaxis: { title: { text: i18n[currentLang].axis_density, style: { color: '#60a5fa' } }, labels: { style: { colors: '#94a3b8' } } }, markers: { size: 6, strokeWidth: 0, fillOpacity: 1, showNullDataPoints: true }, grid: { borderColor: '#334155', padding: { left: 50, right: 50 } }, tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA/m²" } } };
+            const baseTitle = i18n[currentLang].title_density_chart;
+            const chartTitle = `${baseTitle} - ${buName}`;
+            const options = { series: [{ name: 'Current Density', data: densityData }], chart: { type: 'area', height: '100%', fontFamily: 'Plus Jakarta Sans', background: 'transparent', toolbar: { show: true }, animations: { enabled: false } }, title: { text: chartTitle, style: { color: '#fff', fontSize: '14px' } }, theme: { mode: 'dark' }, colors: ['#60a5fa'], stroke: { width: 3, curve: 'straight' }, fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } }, xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' }, formatter: (val) => Math.round(val) }, tickAmount: 'dataPoints' }, yaxis: { title: { text: i18n[currentLang].axis_density, style: { color: '#60a5fa' } }, labels: { style: { colors: '#94a3b8' } } }, markers: { size: 6, strokeWidth: 1, strokeColors: '#fff', fillOpacity: 1, showNullDataPoints: true }, grid: { borderColor: '#334155', padding: { left: 50, right: 50 } }, tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA/m²" } } };
             if(densityChart) densityChart.destroy(); const el = document.querySelector("#chart-density"); if(el) { densityChart = new ApexCharts(el, options); densityChart.render(); }
         };
 
