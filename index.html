@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRCP Master Hub v37.1</title>
+    <title>SPRCP Master Hub v37.1 (Fixed)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -440,7 +440,7 @@
             }
 
             // Warna & Konfigurasi Sumbu
-            const colors = dataType === 'depol' ? ['#a855f7', '#d946ef', '#8b5cf6'] : ['#10b981', '#f59e0b', '#3b82f6'];
+            const colors = ['#10b981', '#f59e0b', '#3b82f6'];
             const yMin = dataType === 'depol' ? 0 : -1200;
             const yMax = dataType === 'depol' ? undefined : 0; 
 
