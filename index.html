@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRCP Master Hub v37.0</title>
+    <title>SPRCP Master Hub v37.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
 
     <div id="loader" class="fixed inset-0 z-[99] bg-slate-950 flex flex-col items-center justify-center text-white transition-opacity duration-500">
         <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center uppercase tracking-tighter">SPRCP<br><span class="text-[9px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-[0.3em]">System V37</span></h2>
+        <h2 class="text-emerald-500 font-bold tracking-tight text-xl italic text-center uppercase tracking-tighter">SPRCP<br><span class="text-[9px] text-slate-500 font-medium tracking-normal not-italic uppercase tracking-[0.3em]">System V37.1</span></h2>
     </div>
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
@@ -38,7 +38,7 @@
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-white flex flex-col shadow-2xl transform -translate-x-full transition-transform duration-300 lg:translate-x-0 lg:static lg:h-screen lg:sticky lg:top-0 overflow-y-auto">
             <div class="p-6 border-b border-slate-800 flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">SPRCP<span class="text-emerald-400">.v37</span></h1>
+                    <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-tight">SPRCP<span class="text-emerald-400">.v37.1</span></h1>
                     <p class="text-[8px] text-slate-500 font-bold uppercase mt-1 tracking-widest leading-none">Smart Patch Repair<br>Cathodic Protection</p>
                 </div>
                 <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
@@ -226,10 +226,11 @@
                 lbl_interval: "Interval Waktu", lbl_sort: "Urutan Waktu", lbl_area: "Luas (m²)", 
                 opt_daily: "Harian", opt_3days: "Per 3 Hari", opt_7days: "Per 7 Hari", opt_14days: "Per 14 Hari", opt_all: "Semua Benda Uji", 
                 btn_export: "Ekspor Excel", btn_save: "Simpan Konfigurasi", btn_send: "Kirim Ke Perangkat", 
-                axis_days: "Waktu Paparan (Hari)", axis_pot: "Potensial (mV vs CSE)", axis_flow: "Arus (mA)", axis_density: "Densitas Arus (mA/m²)", 
+                axis_days: "Waktu Paparan (Hari)", axis_pot: "Potensial (mV vs CSE)", axis_flow: "Arus (mA)", axis_density: "Densitas Arus (mA/m²)", axis_depol: "Depolarisasi (mV)",
                 calib_title: "Kalibrasi SPRCP", coeff_a: "Koefisien A", coeff_b: "Koefisien B", coeff_c: "Koefisien C", 
-                rebar_1: "Tulangan 1", rebar_2: "Tulangan 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", 
+                rebar_1: "Tulangan 1", rebar_2: "Tulangan 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", lbl_depol: "Depolarisasi",
                 th_time_ph1: "Waktu PH1", th_time_ph2: "Waktu PH2", th_time: "Waktu", th_sample: "Sampel", th_temp: "Suhu", th_zone: "Zona", 
+                th_depol: "DEPOL",
                 sort_new: "Baru -> Lama", sort_old: "Lama -> Baru", 
                 title_pot_chart: "Grafik Potensial Korosi", 
                 title_flow_chart: "Grafik Arus Listrik (Current Flow)", 
@@ -242,10 +243,11 @@
                 lbl_interval: "Time Interval", lbl_sort: "Time Sort", lbl_area: "Area (m²)", 
                 opt_daily: "Daily", opt_3days: "Every 3 Days", opt_7days: "Every 7 Days", opt_14days: "Every 14 Days", opt_all: "All Specimens", 
                 btn_export: "Export Excel", btn_save: "Save Config", btn_send: "Send to Device", 
-                axis_days: "Exposure Time (Days)", axis_pot: "Potential (mV vs CSE)", axis_flow: "Current (mA)", axis_density: "Current Density (mA/m²)", 
+                axis_days: "Exposure Time (Days)", axis_pot: "Potential (mV vs CSE)", axis_flow: "Current (mA)", axis_density: "Current Density (mA/m²)", axis_depol: "Depolarization (mV)",
                 calib_title: "SPRCP Calibration", coeff_a: "Coefficient A", coeff_b: "Coefficient B", coeff_c: "Coefficient C", 
-                rebar_1: "Rebar 1", rebar_2: "Rebar 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", 
+                rebar_1: "Rebar 1", rebar_2: "Rebar 2", lbl_on: "ON Potential", lbl_off: "Instant OFF", lbl_rest: "Rest Potential", lbl_depol: "Depolarization",
                 th_time_ph1: "Time PH1", th_time_ph2: "Time PH2", th_time: "Time", th_sample: "Specimen", th_temp: "Temp", th_zone: "Zone", 
+                th_depol: "DEPOL",
                 sort_new: "Newest -> Oldest", sort_old: "Oldest -> Newest", 
                 title_pot_chart: "Corrosion Potential Chart", 
                 title_flow_chart: "Current Flow Chart", 
@@ -293,11 +295,13 @@
         function updateTrendOptions() {
             const method = document.getElementById('trend-method').value;
             const sel = document.getElementById('trend-datatype');
-            sel.innerHTML = method === 'SACP' ? `<option value="on">${i18n[currentLang].lbl_on}</option><option value="off" selected>${i18n[currentLang].lbl_off}</option><option value="rest">${i18n[currentLang].lbl_rest}</option>` : `<option value="hcp" selected>HCP</option>`;
+            sel.innerHTML = method === 'SACP' 
+                ? `<option value="on">${i18n[currentLang].lbl_on}</option><option value="off" selected>${i18n[currentLang].lbl_off}</option><option value="rest">${i18n[currentLang].lbl_rest}</option><option value="depol">${i18n[currentLang].lbl_depol}</option>` 
+                : `<option value="hcp" selected>HCP</option>`;
             window.updateTrendChart();
         }
 
-        // --- CHART: POTENTIAL ---
+        // --- CHART: POTENTIAL & DEPOLARIZATION (FIXED LOGIC) ---
         window.updateTrendChart = () => {
             const bu = document.getElementById('trend-bu').value;
             const method = document.getElementById('trend-method').value;
@@ -314,56 +318,140 @@
             if(dataType === 'off') yLabel = `${i18n[currentLang].lbl_off} (mV vs CSE)`;
             if(dataType === 'rest') yLabel = `${i18n[currentLang].lbl_rest} (mV vs CSE)`;
             if(dataType === 'hcp') yLabel = `HCP (mV vs CSE)`;
+            if(dataType === 'depol') yLabel = i18n[currentLang].axis_depol;
 
-            const dailyData = new Map();
-            rawLogs.forEach(l => {
-                if (bu !== 'ALL' && l.bu !== bu) return;
-                if (getTulangan(l.tp) !== tulanganVal) return;
-                if(method === 'SACP' && (l.fase === 'PH1' || l.fase === 'PH2')) { /* ok */ }
-                else if(method === 'HCP' && l.fase === 'HCP') { /* ok */ }
-                else return;
+            const zones = ['Patch Repair', 'Boundary', 'Existing'];
+            const series = zones.map(z => ({ name: z, data: [] }));
 
-                const key = `${l.hari_ke}-${l.tipe_titik}`; 
-                if (!dailyData.has(key)) dailyData.set(key, { hari: l.hari_ke, sum: 0, count: 0, suhuSum: 0, suhuCount: 0 });
-                const entry = dailyData.get(key);
-                if(l.suhu) { entry.suhuSum += l.suhu; entry.suhuCount++; }
+            if (method === 'SACP' && dataType === 'depol') {
+                // LOGIKA KHUSUS DEPOLARISASI: Menggabungkan PH1 (Hari X) dan PH2 (Hari Y)
+                // 1. Kumpulkan semua log SACP untuk BU/Tulangan terpilih
+                const logs = rawLogs.filter(l => (bu === 'ALL' || l.bu === bu) && getTulangan(l.tp) === tulanganVal && (l.fase === 'PH1' || l.fase === 'PH2'));
+                logs.sort((a,b) => a.timestamp - b.timestamp);
 
-                let val = null;
-                if(method === 'SACP') {
-                    if(dataType === 'on' && l.fase === 'PH1') val = l.on_avg;
-                    if(dataType === 'off' && l.fase === 'PH1') val = l.off_avg;
-                    if(dataType === 'rest' && l.fase === 'PH2') { val = l.v_off_avg; if(val === undefined) val = l.rest_avg; }
-                } else { if(l.fase === 'HCP') val = l.hcp_avg || l.v_off_avg; }
-                if(val !== null && !isNaN(val)) { entry.sum += parseFloat(val); entry.count++; }
-            });
-
-            const days = [...new Set(Array.from(dailyData.values()).map(d => d.hari))].sort((a,b) => a-b);
-            const filteredDays = days.filter(d => d % interval === 0 || d === 1);
-            const zones = ['Patch Repair', 'Boundary', 'Existing']; 
-            
-            const series = zones.map(z => {
-                const dataPoints = [];
-                filteredDays.forEach(d => {
-                    const searchKey = `${d}-${z === 'Boundary' ? 'Bounding' : z}`; 
-                    const entry = dailyData.get(searchKey) || dailyData.get(`${d}-${z}`); 
-                    if(entry && entry.count > 0) {
-                        const rawAvg = entry.sum / entry.count;
-                        const tempAvg = entry.suhuCount > 0 ? entry.suhuSum / entry.suhuCount : 25;
-                        const val = calcFinalPotential(rawAvg, tempAvg);
-                        dataPoints.push({ x: d, y: val });
-                    }
+                // 2. Grouping per Titik (TP) untuk pairing PH1-PH2
+                const tpGroups = {};
+                logs.forEach(l => {
+                    if(!tpGroups[l.tp]) tpGroups[l.tp] = [];
+                    tpGroups[l.tp].push(l);
                 });
-                return { name: z, data: dataPoints };
-            });
+
+                // 3. Pairing dan Kalkulasi Depol
+                const depolPoints = []; // { day: int, zone: str, val: float }
+                Object.values(tpGroups).forEach(pointLogs => {
+                    let pendingPH1 = null;
+                    pointLogs.forEach(l => {
+                        if(l.fase === 'PH1') {
+                            pendingPH1 = l;
+                        } else if(l.fase === 'PH2' && pendingPH1) {
+                            // Hitung Depol = |CSE_Off - CSE_Rest|
+                            const offVal = pendingPH1.off_avg;
+                            const restVal = l.v_off_avg || l.rest_avg;
+                            const tOff = pendingPH1.suhu || 25;
+                            const tRest = l.suhu || 25;
+                            
+                            if(offVal !== undefined && restVal !== undefined) {
+                                const cseOff = calcFinalPotential(offVal, tOff);
+                                const cseRest = calcFinalPotential(restVal, tRest);
+                                if(cseOff !== null && cseRest !== null) {
+                                    const depol = Math.abs(cseOff - cseRest);
+                                    // Gunakan Hari saat siklus selesai (Hari PH2) untuk plotting
+                                    depolPoints.push({ day: l.hari_ke, zone: l.tipe_titik, val: depol });
+                                }
+                            }
+                            // Reset (atau keep pendingPH1 jika PH1 bisa dipakai multiple PH2? Biasanya 1:1)
+                            // pendingPH1 = null; // Uncomment jika 1:1 strict. Commented = allows multi-rest checks.
+                        }
+                    });
+                });
+
+                // 4. Aggregasi Rata-rata per Zona per Hari
+                const zoneDaySums = {}; // key: "Zone-Day" -> {sum, count}
+                depolPoints.forEach(p => {
+                    // Mapping Zona JSON ke Zona Grafik
+                    let zoneName = p.zone;
+                    if(zoneName === 'Bounding') zoneName = 'Boundary'; // Normalize
+                    
+                    const key = `${zoneName}-${p.day}`;
+                    if(!zoneDaySums[key]) zoneDaySums[key] = { sum: 0, count: 0 };
+                    zoneDaySums[key].sum += p.val;
+                    zoneDaySums[key].count++;
+                });
+
+                // 5. Build Series
+                series.forEach(s => {
+                    // Cari semua data hari yang tersedia untuk zona ini
+                    const relevantKeys = Object.keys(zoneDaySums).filter(k => k.startsWith(s.name + '-'));
+                    relevantKeys.forEach(k => {
+                        const day = parseInt(k.split('-')[1]);
+                        // Terapkan Filter Interval
+                        if (day % interval === 0 || day === 1) {
+                            const entry = zoneDaySums[k];
+                            const avgVal = parseFloat((entry.sum / entry.count).toFixed(1));
+                            s.data.push({ x: day, y: avgVal });
+                        }
+                    });
+                    s.data.sort((a,b) => a.x - b.x);
+                });
+
+            } else {
+                // LOGIKA STANDAR (On, Off, Rest, HCP)
+                const dailyData = new Map();
+                rawLogs.forEach(l => {
+                    if (bu !== 'ALL' && l.bu !== bu) return;
+                    if (getTulangan(l.tp) !== tulanganVal) return;
+                    if(method === 'SACP' && (l.fase === 'PH1' || l.fase === 'PH2')) { /* ok */ }
+                    else if(method === 'HCP' && l.fase === 'HCP') { /* ok */ }
+                    else return;
+
+                    // Normalize Zone Name
+                    let zName = l.tipe_titik;
+                    if(zName === 'Bounding') zName = 'Boundary';
+
+                    const key = `${l.hari_ke}-${zName}`; 
+                    if (!dailyData.has(key)) dailyData.set(key, { hari: l.hari_ke, sum: 0, count: 0, suhuSum: 0, suhuCount: 0 });
+                    const entry = dailyData.get(key);
+                    if(l.suhu) { entry.suhuSum += l.suhu; entry.suhuCount++; }
+
+                    let val = null;
+                    if(method === 'SACP') {
+                        if(dataType === 'on' && l.fase === 'PH1') val = l.on_avg;
+                        if(dataType === 'off' && l.fase === 'PH1') val = l.off_avg;
+                        if(dataType === 'rest' && l.fase === 'PH2') { val = l.v_off_avg; if(val === undefined) val = l.rest_avg; }
+                    } else { if(l.fase === 'HCP') val = l.hcp_avg || l.v_off_avg; }
+                    
+                    if(val !== null && !isNaN(val)) { entry.sum += parseFloat(val); entry.count++; }
+                });
+
+                series.forEach(s => {
+                    const days = [...new Set(Array.from(dailyData.values()).map(d => d.hari))].sort((a,b) => a-b);
+                    const filteredDays = days.filter(d => d % interval === 0 || d === 1);
+                    filteredDays.forEach(d => {
+                        const searchKey = `${d}-${s.name}`;
+                        const entry = dailyData.get(searchKey);
+                        if(entry && entry.count > 0) {
+                            const rawAvg = entry.sum / entry.count;
+                            const tempAvg = entry.suhuCount > 0 ? entry.suhuSum / entry.suhuCount : 25;
+                            const finalVal = calcFinalPotential(rawAvg, tempAvg);
+                            if (finalVal !== null) s.data.push({ x: d, y: finalVal });
+                        }
+                    });
+                });
+            }
+
+            // Warna & Konfigurasi Sumbu
+            const colors = dataType === 'depol' ? ['#a855f7', '#d946ef', '#8b5cf6'] : ['#10b981', '#f59e0b', '#3b82f6'];
+            const yMin = dataType === 'depol' ? 0 : -1200;
+            const yMax = dataType === 'depol' ? undefined : 0; 
 
             const options = {
                 series: series,
                 chart: { type: 'line', height: '100%', fontFamily: 'Plus Jakarta Sans', toolbar: { show: true }, animations: { enabled: false } },
                 title: { text: chartTitle, align: 'left', style: { fontSize: '14px', fontWeight: 'bold', color: '#1e293b' } },
                 stroke: { width: 3, curve: 'straight' },
-                colors: ['#10b981', '#f59e0b', '#3b82f6'],
+                colors: colors,
                 xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { fontWeight: 700 } }, tickAmount: 'dataPoints', labels: { formatter: (val) => Math.round(val) } },
-                yaxis: { min: -1200, max: 0, tickAmount: 12, title: { text: yLabel, style: { fontWeight: 700, color: '#64748b' } }, labels: { formatter: (v) => v ? v.toFixed(0) : v } },
+                yaxis: { min: yMin, max: yMax, tickAmount: 12, title: { text: yLabel, style: { fontWeight: 700, color: '#64748b' } }, labels: { formatter: (v) => v ? parseFloat(v).toFixed(0) : v } },
                 markers: { size: 6, strokeWidth: 1, strokeColors: '#fff', fillOpacity: 1, showNullDataPoints: true, hover: { size: 8 } },
                 grid: { borderColor: '#f1f5f9', padding: { left: 50, right: 50 } }, 
                 tooltip: { shared: true, y: { formatter: (v) => v ? v + " mV" : "-" } }
@@ -458,13 +546,27 @@
                     const e = groupSums[groupKey][typeKey];
                     if(row.onAvg!=='-' && !isNaN(row.onAvg)) { e.sumQ+=row.onAvg; e.countQ++; } if(row.offAvg!=='-' && !isNaN(row.offAvg)) { e.sumT+=row.offAvg; e.countT++; } if(row.restAvg!=='-' && !isNaN(row.restAvg)) { e.sumW+=row.restAvg; e.countW++; }
                 });
-                tableHead.innerHTML = `<tr class="bg-slate-100/50"><th class="px-3 py-4 sticky-col text-center">${i18n[currentLang].th_time_ph1}</th><th class="px-3 py-4 sticky-col border-l border-slate-100 text-center" style="left:100px">${i18n[currentLang].th_time_ph2}</th><th class="px-3 py-4 sticky-col border-l border-slate-100" style="left:200px">${i18n[currentLang].th_sample}</th><th class="px-3 py-4">${i18n[currentLang].th_temp}</th><th class="px-3 py-4 text-center">${i18n[currentLang].th_zone}</th><th class="px-3 py-4 text-blue-400 border-l border-slate-200">ON(1)</th><th class="px-3 py-4 text-blue-400">ON(2)</th><th class="px-3 py-4 text-emerald-400 border-l border-slate-200">OFF(1)</th><th class="px-3 py-4 text-emerald-400">OFF(2)</th><th class="px-3 py-4 text-amber-400 border-l border-slate-200">REST(1)</th><th class="px-3 py-4 text-amber-400">REST(2)</th><th class="px-3 py-4 text-blue-600 bg-blue-50 border-l border-blue-100">ON(Avg)</th><th class="px-3 py-4 text-blue-800 bg-blue-100 font-black border-l border-blue-200">SSE ON</th><th class="px-3 py-4 text-blue-900 bg-blue-200 font-black">CSE ON</th><th class="px-3 py-4 text-emerald-600 bg-emerald-50 border-l border-emerald-100">OFF(Avg)</th><th class="px-3 py-4 text-emerald-800 bg-emerald-100 font-black border-l border-emerald-200">SSE OFF</th><th class="px-3 py-4 text-emerald-900 bg-emerald-200 font-black">CSE OFF</th><th class="px-3 py-4 text-amber-600 bg-amber-50 border-l border-amber-100">REST(Avg)</th><th class="px-3 py-4 text-amber-800 bg-amber-100 font-black border-l border-amber-200">SSE REST</th><th class="px-3 py-4 text-amber-900 bg-amber-200 font-black">CSE REST</th></tr>`;
+                // Menambahkan Header Kolom DEPOL di akhir
+                tableHead.innerHTML = `<tr class="bg-slate-100/50"><th class="px-3 py-4 sticky-col text-center">${i18n[currentLang].th_time_ph1}</th><th class="px-3 py-4 sticky-col border-l border-slate-100 text-center" style="left:100px">${i18n[currentLang].th_time_ph2}</th><th class="px-3 py-4 sticky-col border-l border-slate-100" style="left:200px">${i18n[currentLang].th_sample}</th><th class="px-3 py-4">${i18n[currentLang].th_temp}</th><th class="px-3 py-4 text-center">${i18n[currentLang].th_zone}</th><th class="px-3 py-4 text-blue-400 border-l border-slate-200">ON(1)</th><th class="px-3 py-4 text-blue-400">ON(2)</th><th class="px-3 py-4 text-emerald-400 border-l border-slate-200">OFF(1)</th><th class="px-3 py-4 text-emerald-400">OFF(2)</th><th class="px-3 py-4 text-amber-400 border-l border-slate-200">REST(1)</th><th class="px-3 py-4 text-amber-400">REST(2)</th><th class="px-3 py-4 text-blue-600 bg-blue-50 border-l border-blue-100">ON(Avg)</th><th class="px-3 py-4 text-blue-800 bg-blue-100 font-black border-l border-blue-200">SSE ON</th><th class="px-3 py-4 text-blue-900 bg-blue-200 font-black">CSE ON</th><th class="px-3 py-4 text-emerald-600 bg-emerald-50 border-l border-emerald-100">OFF(Avg)</th><th class="px-3 py-4 text-emerald-800 bg-emerald-100 font-black border-l border-emerald-200">SSE OFF</th><th class="px-3 py-4 text-emerald-900 bg-emerald-200 font-black">CSE OFF</th><th class="px-3 py-4 text-amber-600 bg-amber-50 border-l border-amber-100">REST(Avg)</th><th class="px-3 py-4 text-amber-800 bg-amber-100 font-black border-l border-amber-200">SSE REST</th><th class="px-3 py-4 text-amber-900 bg-amber-200 font-black">CSE REST</th><th class="px-3 py-4 text-purple-900 bg-purple-200 font-black border-l border-purple-300 text-center">${i18n[currentLang].th_depol}</th></tr>`;
                 mergedRows.forEach(d => {
                     const tr = document.createElement('tr'); tr.className = "hover:bg-emerald-50/30 transition-all border-b border-slate-100 text-slate-700 font-bold";
                     const fmt = (v) => (v !== '-' && !isNaN(v)) ? parseFloat(v).toFixed(2) : '-';
                     const tulangan = getTulangan(d.tp), timeKey = d.waktuPH1 !== '-' ? d.waktuPH1 : d.waktuPH2, groupKey = `${d.bu}-${tulangan}-${timeKey}`, stats = groupSums[groupKey]?.[d.typePoint];
                     const sseOn = stats&&stats.countQ>0?stats.sumQ/stats.countQ:null, sseOff = stats&&stats.countT>0?stats.sumT/stats.countT:null, sseRest = stats&&stats.countW>0?stats.sumW/stats.countW:null;
-                    tr.innerHTML = `<td class="px-3 py-3 sticky-col text-center leading-tight text-slate-900 font-black">${d.waktuPH1}</td><td class="px-3 py-3 sticky-col border-l border-slate-100 text-center leading-tight text-slate-900 font-black" style="left:100px">${d.waktuPH2}</td><td class="px-3 py-3 sticky-col text-slate-900 font-extrabold uppercase border-l border-slate-100" style="left:200px">${d.bu}<br><span class="text-[8px] text-slate-400 font-mono">${d.tp}</span></td><td class="px-3 py-3 text-rose-500 text-center">${d.suhu.toFixed(1)}</td><td class="px-3 py-3 text-slate-400 text-[8px] uppercase text-center">${d.typePoint}</td><td class="px-3 py-3 text-center border-l font-mono text-blue-400">${fmt(d.on1)}</td><td class="px-3 py-3 text-center font-mono text-blue-400">${fmt(d.on2)}</td><td class="px-3 py-3 text-center border-l font-mono text-emerald-400">${fmt(d.off1)}</td><td class="px-3 py-3 text-center font-mono text-emerald-400">${fmt(d.off2)}</td><td class="px-3 py-3 text-center border-l font-mono text-amber-400">${fmt(d.rest1)}</td><td class="px-3 py-3 text-center font-mono text-amber-400">${fmt(d.rest2)}</td><td class="px-3 py-3 text-center bg-blue-50 border-l font-mono text-blue-600">${fmt(d.onAvg)}</td><td class="px-3 py-3 text-center bg-blue-100 border-l font-mono font-black text-blue-800">${fmt(sseOn)}</td><td class="px-3 py-3 text-center bg-blue-200 font-mono font-black text-blue-900">${fmt(calcFinalPotential(sseOn, d.suhu))}</td><td class="px-3 py-3 text-center bg-emerald-50 border-l font-mono text-emerald-600">${fmt(d.offAvg)}</td><td class="px-3 py-3 text-center bg-emerald-100 border-l font-mono font-black text-emerald-800">${fmt(sseOff)}</td><td class="px-3 py-3 text-center bg-emerald-200 font-mono font-black text-emerald-900">${fmt(calcFinalPotential(sseOff, d.suhu))}</td><td class="px-3 py-3 text-center bg-amber-50 border-l font-mono text-amber-600">${fmt(d.restAvg)}</td><td class="px-3 py-3 text-center bg-amber-100 border-l font-mono font-black text-amber-800">${fmt(sseRest)}</td><td class="px-3 py-3 text-center bg-amber-200 font-mono font-black text-amber-900">${fmt(calcFinalPotential(sseRest, d.suhu))}</td>`;
+                    
+                    // Hitung Depolarisasi Per Baris: |CSE Off - CSE Rest|
+                    let depolVal = '-';
+                    const cseOffVal = calcFinalPotential(sseOff, d.suhu);
+                    const cseRestVal = calcFinalPotential(sseRest, d.suhu);
+                    if (d.offAvg !== '-' && d.restAvg !== '-' && !isNaN(d.offAvg) && !isNaN(d.restAvg)) {
+                        const cseOffRow = calcFinalPotential(d.offAvg, d.suhu);
+                        const cseRestRow = calcFinalPotential(d.restAvg, d.suhu);
+                        if (cseOffRow !== null && cseRestRow !== null) {
+                            depolVal = Math.abs(cseOffRow - cseRestRow).toFixed(1);
+                        }
+                    }
+
+                    tr.innerHTML = `<td class="px-3 py-3 sticky-col text-center leading-tight text-slate-900 font-black">${d.waktuPH1}</td><td class="px-3 py-3 sticky-col border-l border-slate-100 text-center leading-tight text-slate-900 font-black" style="left:100px">${d.waktuPH2}</td><td class="px-3 py-3 sticky-col text-slate-900 font-extrabold uppercase border-l border-slate-100" style="left:200px">${d.bu}<br><span class="text-[8px] text-slate-400 font-mono">${d.tp}</span></td><td class="px-3 py-3 text-rose-500 text-center">${d.suhu.toFixed(1)}</td><td class="px-3 py-3 text-slate-400 text-[8px] uppercase text-center">${d.typePoint}</td><td class="px-3 py-3 text-center border-l font-mono text-blue-400">${fmt(d.on1)}</td><td class="px-3 py-3 text-center font-mono text-blue-400">${fmt(d.on2)}</td><td class="px-3 py-3 text-center border-l font-mono text-emerald-400">${fmt(d.off1)}</td><td class="px-3 py-3 text-center font-mono text-emerald-400">${fmt(d.off2)}</td><td class="px-3 py-3 text-center border-l font-mono text-amber-400">${fmt(d.rest1)}</td><td class="px-3 py-3 text-center font-mono text-amber-400">${fmt(d.rest2)}</td><td class="px-3 py-3 text-center bg-blue-50 border-l font-mono text-blue-600">${fmt(d.onAvg)}</td><td class="px-3 py-3 text-center bg-blue-100 border-l font-mono font-black text-blue-800">${fmt(sseOn)}</td><td class="px-3 py-3 text-center bg-blue-200 font-mono font-black text-blue-900">${fmt(calcFinalPotential(sseOn, d.suhu))}</td><td class="px-3 py-3 text-center bg-emerald-50 border-l font-mono text-emerald-600">${fmt(d.offAvg)}</td><td class="px-3 py-3 text-center bg-emerald-100 border-l font-mono font-black text-emerald-800">${fmt(sseOff)}</td><td class="px-3 py-3 text-center bg-emerald-200 font-mono font-black text-emerald-900">${fmt(calcFinalPotential(sseOff, d.suhu))}</td><td class="px-3 py-3 text-center bg-amber-50 border-l font-mono text-amber-600">${fmt(d.restAvg)}</td><td class="px-3 py-3 text-center bg-amber-100 border-l font-mono font-black text-amber-800">${fmt(sseRest)}</td><td class="px-3 py-3 text-center bg-amber-200 font-mono font-black text-amber-900">${fmt(calcFinalPotential(sseRest, d.suhu))}</td><td class="px-3 py-3 text-center bg-purple-200 border-l border-purple-300 font-mono font-black text-purple-900">${depolVal}</td>`;
                     tableBody.appendChild(tr);
                 });
             } else {
