@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRCP Master Hub v37.1 (Fixed)</title>
+    <title>SPRCP Master Hub v37.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -501,6 +501,117 @@
             const chartTitle = `${baseTitle} - ${buName}`;
             const options = { series: [{ name: 'Current Density', data: densityData }], chart: { type: 'area', height: '100%', fontFamily: 'Plus Jakarta Sans', background: 'transparent', toolbar: { show: true }, animations: { enabled: false } }, title: { text: chartTitle, style: { color: '#fff', fontSize: '14px' } }, theme: { mode: 'dark' }, colors: ['#60a5fa'], stroke: { width: 3, curve: 'straight' }, fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.1 } }, xaxis: { type: 'numeric', title: { text: i18n[currentLang].axis_days, style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' }, formatter: (val) => Math.round(val) }, tickAmount: 'dataPoints' }, yaxis: { title: { text: i18n[currentLang].axis_density, style: { color: '#60a5fa' } }, labels: { style: { colors: '#94a3b8' } } }, markers: { size: 6, strokeWidth: 1, strokeColors: '#fff', fillOpacity: 1, showNullDataPoints: true }, grid: { borderColor: '#334155', padding: { left: 50, right: 50 } }, tooltip: { theme: 'dark', y: { formatter: (v) => v + " mA/m²" } } };
             if(densityChart) densityChart.destroy(); const el = document.querySelector("#chart-density"); if(el) { densityChart = new ApexCharts(el, options); densityChart.render(); }
+        };
+
+        window.exportToExcel = () => {
+            const filterBU = document.getElementById('filter-bu').value;
+            const filterType = document.getElementById('filter-type').value;
+            const sortOrder = document.getElementById('filter-sort').value;
+            
+            const groupedData = new Map();
+            rawLogs.forEach(l => {
+                if (filterBU !== 'ALL' && l.bu !== filterBU) return;
+                const aggKey = `${l.bu}-${l.tp}-${l.fase}-${l.hari_ke}`;
+                if (!groupedData.has(aggKey)) { groupedData.set(aggKey, { bu: l.bu, tp: l.tp, fase: l.fase, hari: l.hari_ke, typePoint: l.tipe_titik, suhu: l.suhu || 25, waktu: l.waktu_lokal, timestamp: l.timestamp, vals: [] }); }
+                const entry = groupedData.get(aggKey);
+                if (l.fase === 'PH1') { entry.vals.push({ on1: l.on_1||l.v_on_1, on2: l.on_2||l.v_on_2, onAvg: l.on_avg, off1: l.off_1||l.v_off_1, off2: l.off_2||l.v_off_2, offAvg: l.off_avg }); }
+                else if (l.fase === 'PH2') { entry.vals.push({ rest1: l.v_off_1, rest2: l.v_off_2, restAvg: l.v_off_avg || l.off_avg }); }
+                else if (l.fase === 'HCP') { entry.vals.push({ hcp1: l.hcp_1 || l.v_off_1, hcp2: l.hcp_2 || l.v_off_2, hcpAvg: l.hcp_avg || l.off_avg || l.v_off_avg }); }
+                if (l.timestamp > entry.timestamp) { entry.timestamp = l.timestamp; entry.waktu = l.waktu_lokal; }
+            });
+            const flatList = Array.from(groupedData.values()).map(d => {
+                if (d.vals.length === 0) return d;
+                const avg = (arr, key) => { const valid = arr.map(x => parseFloat(x[key])).filter(x => !isNaN(x)); return valid.length===0 ? '-' : valid.reduce((a,b)=>a+b,0)/valid.length; };
+                if (d.fase === 'PH1') { d.on1 = avg(d.vals, 'on1'); d.on2 = avg(d.vals, 'on2'); d.onAvg = avg(d.vals, 'onAvg'); d.off1 = avg(d.vals, 'off1'); d.off2 = avg(d.vals, 'off2'); d.offAvg = avg(d.vals, 'offAvg'); }
+                else if (d.fase === 'PH2') { d.rest1 = avg(d.vals, 'rest1'); d.rest2 = avg(d.vals, 'rest2'); d.restAvg = avg(d.vals, 'restAvg'); }
+                else if (d.fase === 'HCP') { d.hcp1 = avg(d.vals, 'hcp1'); d.hcp2 = avg(d.vals, 'hcp2'); d.hcpAvg = avg(d.vals, 'hcpAvg'); }
+                return d;
+            });
+            const sortByTimestamp = (a, b) => sortOrder === 'DESC' ? b.timestamp - a.timestamp : a.timestamp - b.timestamp;
+
+            const wb = XLSX.utils.book_new();
+            let hasData = false;
+
+            // --- PROSES DATA SACP ---
+            const sacpLogs = flatList.filter(d => d.fase === 'PH1' || d.fase === 'PH2');
+            if (sacpLogs.length > 0) {
+                const mergedRows = [], pendingPH1 = {}; 
+                sacpLogs.sort((a, b) => a.timestamp - b.timestamp);
+                sacpLogs.forEach(log => {
+                    const key = `${log.bu}-${log.tp}`;
+                    if (log.fase === 'PH1') { if (pendingPH1[key]) mergedRows.push(pendingPH1[key]); pendingPH1[key] = { ...log, waktuPH1: `Hari ${log.hari}`, waktuPH2: '-', rest1: '-', rest2: '-', restAvg: '-' }; }
+                    else if (log.fase === 'PH2') { if (pendingPH1[key]) { const row = pendingPH1[key]; row.timestamp = Math.max(row.timestamp, log.timestamp); row.waktuPH2 = `Hari ${log.hari}`, row.rest1 = log.rest1; row.rest2 = log.rest2; row.restAvg = log.restAvg; mergedRows.push(row); delete pendingPH1[key]; } else { mergedRows.push({ ...log, waktuPH1: '-', waktuPH2: `Hari ${log.hari}`, on1: '-', on2: '-', onAvg: '-', off1: '-', off2: '-', offAvg: '-' }); } }
+                });
+                Object.values(pendingPH1).forEach(r => mergedRows.push(r));
+                mergedRows.sort(sortByTimestamp);
+                
+                const groupSums = {};
+                mergedRows.forEach(row => {
+                    const tulangan = getTulangan(row.tp), timeKey = row.waktuPH1 !== '-' ? row.waktuPH1 : row.waktuPH2, groupKey = `${row.bu}-${tulangan}-${timeKey}`, typeKey = row.typePoint;
+                    if(!groupSums[groupKey]) groupSums[groupKey] = {}; if(!groupSums[groupKey][typeKey]) groupSums[groupKey][typeKey] = { sumQ: 0, countQ: 0, sumT: 0, countT: 0, sumW: 0, countW: 0 };
+                    const e = groupSums[groupKey][typeKey];
+                    if(row.onAvg!=='-' && !isNaN(row.onAvg)) { e.sumQ+=row.onAvg; e.countQ++; } if(row.offAvg!=='-' && !isNaN(row.offAvg)) { e.sumT+=row.offAvg; e.countT++; } if(row.restAvg!=='-' && !isNaN(row.restAvg)) { e.sumW+=row.restAvg; e.countW++; }
+                });
+
+                const sacpData = mergedRows.map(d => {
+                    const tulangan = getTulangan(d.tp), timeKey = d.waktuPH1 !== '-' ? d.waktuPH1 : d.waktuPH2, groupKey = `${d.bu}-${tulangan}-${timeKey}`, stats = groupSums[groupKey]?.[d.typePoint];
+                    const sseOn = stats&&stats.countQ>0?stats.sumQ/stats.countQ:null, sseOff = stats&&stats.countT>0?stats.sumT/stats.countT:null, sseRest = stats&&stats.countW>0?stats.sumW/stats.countW:null;
+                    
+                    let depolVal = '-';
+                    if (d.offAvg !== '-' && d.restAvg !== '-' && !isNaN(d.offAvg) && !isNaN(d.restAvg)) {
+                        const cseOffRow = calcFinalPotential(d.offAvg, d.suhu);
+                        const cseRestRow = calcFinalPotential(d.restAvg, d.suhu);
+                        if (cseOffRow !== null && cseRestRow !== null) depolVal = Math.abs(cseOffRow - cseRestRow).toFixed(1);
+                    }
+
+                    return {
+                        "Waktu PH1": d.waktuPH1, "Waktu PH2": d.waktuPH2, "Sampel": d.bu, "Titik": d.tp, "Suhu": d.suhu.toFixed(1), "Zona": d.typePoint,
+                        "ON(1)": d.on1 !== '-' ? parseFloat(d.on1).toFixed(2) : '-', "ON(2)": d.on2 !== '-' ? parseFloat(d.on2).toFixed(2) : '-', "ON(Avg)": d.onAvg !== '-' ? parseFloat(d.onAvg).toFixed(2) : '-', 
+                        "SSE ON": sseOn ? sseOn.toFixed(2) : '-', "CSE ON": sseOn ? calcFinalPotential(sseOn, d.suhu).toFixed(2) : '-',
+                        "OFF(1)": d.off1 !== '-' ? parseFloat(d.off1).toFixed(2) : '-', "OFF(2)": d.off2 !== '-' ? parseFloat(d.off2).toFixed(2) : '-', "OFF(Avg)": d.offAvg !== '-' ? parseFloat(d.offAvg).toFixed(2) : '-',
+                        "SSE OFF": sseOff ? sseOff.toFixed(2) : '-', "CSE OFF": sseOff ? calcFinalPotential(sseOff, d.suhu).toFixed(2) : '-',
+                        "REST(1)": d.rest1 !== '-' ? parseFloat(d.rest1).toFixed(2) : '-', "REST(2)": d.rest2 !== '-' ? parseFloat(d.rest2).toFixed(2) : '-', "REST(Avg)": d.restAvg !== '-' ? parseFloat(d.restAvg).toFixed(2) : '-',
+                        "SSE REST": sseRest ? sseRest.toFixed(2) : '-', "CSE REST": sseRest ? calcFinalPotential(sseRest, d.suhu).toFixed(2) : '-',
+                        "Depolarisasi": depolVal
+                    };
+                });
+
+                if(sacpData.length > 0) {
+                    const wsSACP = XLSX.utils.json_to_sheet(sacpData);
+                    XLSX.utils.book_append_sheet(wb, wsSACP, "SACP Data");
+                    hasData = true;
+                }
+            }
+
+            // --- PROSES DATA HCP ---
+            const hcpLogs = flatList.filter(d => d.fase === 'HCP').sort(sortByTimestamp);
+            if (hcpLogs.length > 0) {
+                const groupSumsHCP = {};
+                hcpLogs.forEach(row => { if (row.hcpAvg === '-' || row.hcpAvg === undefined) return; const tulangan = getTulangan(row.tp), groupKey = `${row.bu}-${tulangan}-Hari ${row.hari}`, typeKey = row.typePoint; if(!groupSumsHCP[groupKey]) groupSumsHCP[groupKey] = {}; if(!groupSumsHCP[groupKey][typeKey]) groupSumsHCP[groupKey][typeKey] = { sum: 0, count: 0 }; groupSumsHCP[groupKey][typeKey].sum += row.hcpAvg; groupSumsHCP[groupKey][typeKey].count++; });
+                
+                const hcpData = hcpLogs.filter(d => d.hcpAvg !== '-' && d.hcpAvg !== undefined).map(d => {
+                    const tulangan = getTulangan(d.tp), groupKey = `${d.bu}-${tulangan}-Hari ${d.hari}`, stats = groupSumsHCP[groupKey]?.[d.typePoint];
+                    const sseHcp = stats&&stats.count>0?stats.sum/stats.count:null;
+                    return {
+                        "Waktu": `Hari ${d.hari}`, "Sampel": d.bu, "Titik": d.tp, "Suhu": d.suhu.toFixed(1), "Zona": d.typePoint,
+                        "HCP(1)": d.hcp1 !== '-' ? parseFloat(d.hcp1).toFixed(2) : '-', "HCP(2)": d.hcp2 !== '-' ? parseFloat(d.hcp2).toFixed(2) : '-', "HCP(Avg)": d.hcpAvg !== '-' ? parseFloat(d.hcpAvg).toFixed(2) : '-',
+                        "SSE HCP": sseHcp ? sseHcp.toFixed(2) : '-', "CSE HCP": sseHcp ? calcFinalPotential(sseHcp, d.suhu).toFixed(2) : '-'
+                    };
+                });
+
+                if(hcpData.length > 0) {
+                    const wsHCP = XLSX.utils.json_to_sheet(hcpData);
+                    XLSX.utils.book_append_sheet(wb, wsHCP, "HCP Data");
+                    hasData = true;
+                }
+            }
+
+            if(hasData) {
+                const fileName = `SPRCP_Complete_Data_${filterBU}_${new Date().toISOString().slice(0,10)}.xlsx`;
+                XLSX.writeFile(wb, fileName);
+            } else {
+                alert("Tidak ada data untuk di-ekspor!");
+            }
         };
 
         window.renderLogTable = () => {
